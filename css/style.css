@@ -1,0 +1,10 @@
+label{
+    display: inline-block;
+    font-size: 2em;
+    width: 30em;
+}
+
+button{
+    height: 5rcap;
+    width: 4rem;
+}
