@@ -15,22 +15,33 @@ const app = initializeApp(firebaseConfig);
 
 import{getDatabase, ref,push, child, get,set,update,remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 const db = getDatabase();
-
+//elementos conductor
 let nombreInput = document.getElementById("nombre");
 let edadInput = document.getElementById("edad");
 let apellidosInput = document.getElementById("apellidos");
 let licenceInput = document.getElementById("licence");
-let celularInput = document.getElementById("phone")
-let emailInput = document.getElementById("email")
-
-//elementos conductor
-let 
-
+let celularInput = document.getElementById("phone");
+let emailInput = document.getElementById("email");
 
 let readBtn = document.getElementById("read");
 let updBtn = document.getElementById("update");
 let delBtn = document.getElementById("delete");
 let newBtn = document.getElementById("crear")
+
+//elementos vehiculo
+
+
+let placaInput = document.getElementById("placa");
+let marcaInput = document.getElementById("marca");
+let modeloInput = document.getElementById("modelo");
+let maxCargInput = document.getElementById("maxCarg");
+let dimentionInput = document.getElementById("dimention");
+let stateInput = document.getElementById("state");
+
+let createCarBtn = document.getElementById("createVehiculoBtn");
+
+
+
 
 
 const idCond = push(child(ref(db), 'conductores')).key;
@@ -95,8 +106,30 @@ function nuevosDatos(){
 }
 
 //añadir nuevo vehiculo
-
-function nuevoVehiculo(){
-
+createCarBtn.addEventListener("click", nuevoVehiculo)
+async function nuevoVehiculo(){
+    event.preventDefault();
+    if (placaInput.value == "" || marcaInput.value == "" || modelo.value == "" || maxCargInput.value == "" ||
+        dimentionInput.value == "" || stateInput.value == "" 
+    ){
+        alert('Por favor, completa todos los campos.');
+        return; // Salir de la función si algún 
+    }try {
+        set(ref(db,"camiones/"+placaInput.value),{
+            marca: marcaInput.value,
+            modelo: modeloInput.value,
+            maxCarg : maxCargInput.value,
+            dimention: dimentionInput.value,
+            state: stateInput.value
+        });
+        alert("vehiculo agregado")
+    } catch (error) {
+        alert("Error");
+        console.log(error);
+    }
+    
+    
+    
+    
 }
 
