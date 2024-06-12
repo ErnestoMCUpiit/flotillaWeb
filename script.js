@@ -38,8 +38,14 @@ let maxCargInput = document.getElementById("maxCarg");
 let dimentionInput = document.getElementById("dimention");
 let stateInput = document.getElementById("state");
 
-let createCarBtn = document.getElementById("createVehiculoBtn");
+//mantenimiento de un vehiculo
+let fechaMantenimientoInput = document.getElementById("fecha");
+let descMantInput = document.getElementById("description");
+let tipoMantInput = document.getElementById("tipo");
 
+
+let createCarBtn = document.getElementById("createVehiculoBtn");
+let addMant = document.getElementById("addMantenimiento");
 
 
 
@@ -127,9 +133,59 @@ async function nuevoVehiculo(){
         alert("Error");
         console.log(error);
     }
-    
-    
-    
-    
 }
 
+addMant.addEventListener("click",addMantenimiento);
+
+async function addMantenimiento(){
+    let placaMant = document.getElementById("placaMant");
+    const placa = placaMant.value;
+    const dbRef = ref(db, 'camiones/'+placa);
+
+    const snapshot = await get(dbRef);
+    if(snapshot.exists()){
+        console.log(snapshot.val().modelo);
+        // snapshot.forEach((child) => {
+        //     console.log(child.val().modelo);
+        // })
+        const tipo = tipoMantInput.value;
+        const description = descMantInput.value;
+        let fecha = fechaMantenimientoInput.value;
+        if(tipo == "" ||description == "" || fecha == "" || placa == ""){
+            alert("Porfavor agrega datos de el mantenimiento");
+            return;
+        }
+        else{
+            try {
+                set(ref(db,"camiones/"+placa+"/mantenimientos/"+tipo),{
+                    descipcion: description,
+                    fechaInicio: fecha
+                });
+            } catch (error) {
+                alert("Error");
+                console.log(error);
+            }
+        }
+    }
+    else{
+        alert("no existe vehiculo con esa placa")
+    }
+
+    // 
+    
+    
+    // event.preventDefault();
+    // // console.log(fecha)
+    
+    // else{
+    //     try {
+    //         set(ref(db,"camiones/"+placaInput.value+"/mantenimientos/"+tipo),{
+    //             descipcion: description,
+    //             fechaInicio: fecha
+    //         });
+    //     } catch (error) {
+    //         alert("Error");
+    //         console.log(error);
+    //     }
+    // }
+}
