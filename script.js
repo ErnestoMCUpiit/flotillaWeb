@@ -19,11 +19,14 @@ const db = getDatabase();
 let nombreInput = document.getElementById("nombre");
 let edadInput = document.getElementById("edad");
 let apellidosInput = document.getElementById("apellidos");
+let licenceInput = document.getElementById("licence");
+let celularInput = document.getElementById("phone")
+let emailInput = document.getElementById("email")
 
-let datosInput = document.getElementById("datos");
+//elementos conductor
+let 
 
 
-let addBtn = document.getElementById("create");
 let readBtn = document.getElementById("read");
 let updBtn = document.getElementById("update");
 let delBtn = document.getElementById("delete");
@@ -32,19 +35,10 @@ let newBtn = document.getElementById("crear")
 
 const idCond = push(child(ref(db), 'conductores')).key;
 
-function addData(){
-    set(ref(db,"conductores/"+idCond+"/datos/"),{
-        nombre: nombreInput.value,
-        apellidos: apellidosInput.value,
-        edad: edad.value
-    })
-    .then(()=>{
-        alert("Datos agregados correctamente");
-    }).catch(()=>{
-        alert("Error");
-        console.log(error);
-    })
-}
+//leer conductor
+readBtn.addEventListener("click", function() {
+    readData(nombreInput.value);
+});        
 
 async function readData(nombreBuscado) {
     const dbRef = ref(db, 'conductores');
@@ -58,28 +52,29 @@ async function readData(nombreBuscado) {
             console.log('Nombre: ' + childData.nombre);
             console.log('Apellidos: ' + childData.apellidos);
             console.log('Edad: ' + childData.edad);
-            alert("Leyendo");
+            console.log('Licencia: ' + childData.licencia);
+            console.log('celular: ' + childData.celular);
+            console.log('email: ' + childData.email);
+            alert("leyendo por nombre correctamente");
         }
+        
     });
-    } else {
+    } 
+    else {
         console.log('No se encontraron datos');
     }
 }
 
-addBtn.addEventListener("click",addData);
-readBtn.addEventListener("click", function() {
-    readData(nombreInput.value);
-});        
-
-
+newBtn.addEventListener("click",nuevosDatos);
+//añadir nuevo conductor
 function nuevosDatos(){
     set(ref(db,"conductores/"+idCond+"/datos/"),{
-        nombre: "test",
-        apellidos: "appellidos test",
-        edad: "100",
-        licencia :"licenciaExample",
-        celular: "celularExample",
-        email: "example@gmail.com"
+        nombre: nombreInput.value,
+        apellidos: apellidosInput.value,
+        edad: edadInput.value,
+        licencia :licenceInput.value,
+        celular: celularInput.value,
+        email: emailInput.value
     })
     .then(()=>{
         alert("conductores actualizada");
@@ -87,8 +82,8 @@ function nuevosDatos(){
         alert("Error");
         console.log(error);
     })
-    const idAsignacion = push(child(ref(db), "conductores/"+idCond+"/datos/")).key;
-    set(ref(db,"conductores/"+idCond+"/datos/"+idAsignacion),{
+    const idAsignacion = push(child(ref(db), "conductores/"+idCond+"/asignaciones")).key;
+    set(ref(db,"conductores/"+idCond+"/asignaciones/"+idAsignacion),{
         placa: "example"
     })
     .then(()=>{
@@ -99,4 +94,9 @@ function nuevosDatos(){
     })
 }
 
-newBtn.addEventListener("click",nuevosDatos);
+//añadir nuevo vehiculo
+
+function nuevoVehiculo(){
+
+}
+
