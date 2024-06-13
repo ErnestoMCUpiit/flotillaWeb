@@ -23,13 +23,19 @@ let licenceInput = document.getElementById("licence");
 let celularInput = document.getElementById("phone");
 let emailInput = document.getElementById("email");
 let searchConductor = document.getElementById("seachConductor");
-//labels para busqueda
+//labels para busqueda conductores
 let nombreLabel = document.getElementById("nombreLabel");
 let apellidosLabel = document.getElementById("apellidosLabel");
 let edadLabel = document.getElementById("edadLabel");
 let phoneLabel = document.getElementById("phoneLabel");
 let emailLabel = document.getElementById("emailLabel");
 let licenceLabel = document.getElementById("licenceLabel");
+//labels para busqueda vehiculos
+let marcaLabel = document.getElementById("marcaLabel");
+let modeloLabel = document.getElementById("modeloLabel");
+let dimentionsLabel = document.getElementById("dimentionsLabel");
+let maxCargLabel = document.getElementById("maxCargLabel");
+let stateLabel = document.getElementById("stateLabel");
 
 let readBtn = document.getElementById("read");
 let updBtn = document.getElementById("update");
@@ -45,6 +51,9 @@ let modeloInput = document.getElementById("modelo");
 let maxCargInput = document.getElementById("maxCarg");
 let dimentionInput = document.getElementById("dimention");
 let stateInput = document.getElementById("state");
+let searchVehicule = document.getElementById("searchVehicule");
+
+let readVehiculeBtn = document.getElementById("readVehicle");
 
 //mantenimiento de un vehiculo
 let fechaMantenimientoInput = document.getElementById("fecha");
@@ -150,6 +159,15 @@ async function nuevoVehiculo(){
     }
 }
 
+//buscar vehiculo por placa
+readVehiculeBtn.addEventListener("click", function(){
+    buscarVehiculo(searchVehicule.value)
+});
+
+async function buscarVehiculo(placa){
+    console.log(placa);
+}
+//añadir mantenimiento
 addMant.addEventListener("click",addMantenimiento);
 
 async function addMantenimiento(){

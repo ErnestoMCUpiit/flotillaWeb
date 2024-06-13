@@ -19,3 +19,7 @@ section{
     justify-content:start;
     flex-direction: column;
 }
+#agregarConductor, #vehiculo{
+    display: flex;
+    justify-content:start;
+}

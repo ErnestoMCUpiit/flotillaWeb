@@ -15,33 +15,36 @@
 
     <article>
         <section id="agregarConductor">
-            <h1>añadir nuevo conductor</h1>
-            <label for="nombre">Nombre</label>
-            <input type="text" id="nombre">
-            <br>
+            <section id="addConductor">
+                <h1>añadir nuevo conductor</h1>
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre">
+                <br>
 
-            <label for="apellidos">Apellidos</label>
-            <input type="text" id="apellidos">
-            <br>
+                <label for="apellidos">Apellidos</label>
+                <input type="text" id="apellidos">
+                <br>
 
-            <label for="edad">edad</label>
-            <input type="text" id="edad">
-            <br>
-            <label for="phone">telefono celular</label>
-            <input type="text" id="phone">
-            <br>
-            <label for="email">email</label>
-            <input type="email" id="email">
-            <br>
-            <label for="licence">numero de licencia</label>
-            <input type="text" id="licence">
-            <br>
-            <br>
-            <button  id="crear">Añadir nuevos conductores</button>
-            
-            <button id="update">Update</button>
-            <button id="delete">delete</button>
+                <label for="edad">edad</label>
+                <input type="text" id="edad">
+                <br>
+                <label for="phone">telefono celular</label>
+                <input type="text" id="phone">
+                <br>
+                <label for="email">email</label>
+                <input type="email" id="email">
+                <br>
+                <label for="licence">numero de licencia</label>
+                <input type="text" id="licence">
+                <br>
+                <br>
+                <button  id="crear">Añadir nuevos conductores</button>
+                
+                <button id="update">Update</button>
+                <button id="delete">delete</button>
+            </section>
             <section id="buscarConductor">
+                
                 <label for="seachConductor">Ingresa Licencia o nombre</label>
                 <input type="text" id="seachConductor">
                 <button id="read">Buscar</button>
@@ -55,59 +58,69 @@
                 </section>
             </section>
         </section>
-        <section id="agregarVehiculo">
-            <h1>añadir nuevo vehiculo</h1>
-            <br>
-            <label for="placa">Placa</label>
-            <input type="text" id="placa">
-            <br>
-            <br>
-            <label for="marca">Marca</label>
-            <input type="text" id="marca">
-            <br>
-            <br>
-            <label for="modelo">Modelo</label>
-            <input type="text" id="modelo">
-            <br>
-            <br>
-            <label for="maxCarg">Carga máxima</label>
-            <input type="text" id="maxCarg">
-            <br>
-            <br>
-            <label for="dimention">Dimensiones</label>
-            <input type="text" id="dimention">
-            <br>
-            <br>
-            <label for="state">Estado</label>
-            <input type="text" id="state">
-            <br>
+        <section id="vehiculo">
+            <section id="agregarVehiculo">
+                <h1>añadir nuevo vehiculo</h1>
+                <br>
+                <label for="placa">Placa</label>
+                <input type="text" id="placa">
+                <br>
+                <br>
+                <label for="marca">Marca</label>
+                <input type="text" id="marca">
+                <br>
+                <br>
+                <label for="modelo">Modelo</label>
+                <input type="text" id="modelo">
+                <br>
+                <br>
+                <label for="maxCarg">Carga máxima</label>
+                <input type="text" id="maxCarg">
+                <br>
+                <br>
+                <label for="dimention">Dimensiones</label>
+                <input type="text" id="dimention">
+                <br>
+                <br>
+                <label for="state">Estado</label>
+                <input type="text" id="state">
+                <br>
 
-            <section id="btnsVehiculo">
-                <button id="createVehiculoBtn" >añadir coche</button>
+                <section id="btnsVehiculo">
+                    <button id="createVehiculoBtn" >añadir coche</button>
+                </section>
             </section>
-
-            <section id="agregar mantenimiento">
-                <h2>agregar mantenimiento a vehiculo</h2>
-                <br>
-                <label for="placaMant">Placa del vehiculo</label>
-                <input type="text" id="placaMant">
-                <br>
-                <label for="tipo">Tipo de mantenimiento</label>
-                <input type="text" id="tipo">
-                <br>
-                <label for="decription">Descripción</label>
-                <input type="text" id="description">
-                <br>
-                <label for="fecha">fecha</label>
-                <input type="date" id="fecha">
-                <br>
-                <button id="addMantenimiento">Añadir mantenimiento</button>
+            <section id="buscarVehiculo">
+                <h2>Buscar vehiculo por placa</h2>
+                <label for="searchVehicle">Ingresa Licencia o nombre</label>
+                <input type="text" id="searchVehicle">
+                <button id="readVehicle">Buscar</button>
+                <section id="datos">
+                    <label id="marcaLabel"></label>
+                    <label id="modeloLabel"></label>
+                    <label id="dimentionsLabel"></label>
+                    <label id="maxCargLabel"></label>
+                    <label id="stateLabel"></label>
+                </section>
             </section>
+            
         </section>
-    </article>
-    <article>
-        <section id="buscarVehiculo">
-
+        <section id="agregar mantenimiento">
+            <h2>agregar mantenimiento a vehiculo</h2>
+            <br>
+            <label for="placaMant">Placa del vehiculo</label>
+            <input type="text" id="placaMant">
+            <br>
+            <label for="tipo">Tipo de mantenimiento</label>
+            <input type="text" id="tipo">
+            <br>
+            <label for="decription">Descripción</label>
+            <input type="text" id="description">
+            <br>
+            <label for="fecha">fecha</label>
+            <input type="date" id="fecha">
+            <br>
+            <button id="addMantenimiento">Añadir mantenimiento</button>
         </section>
     </article>
     <br>
