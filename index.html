@@ -6,8 +6,7 @@
     <title>Flotilla web</title>
 
     <link rel="stylesheet" href="css/style.css">
-    <script type="module" src="script.js">
-    </script>
+    
 </head>
 <body>
     <header>
@@ -39,9 +38,22 @@
             <br>
             <br>
             <button  id="crear">Añadir nuevos conductores</button>
-            <button id="read">Read</button>
+            
             <button id="update">Update</button>
             <button id="delete">delete</button>
+            <section id="buscarConductor">
+                <label for="seachConductor">Ingresa Licencia o nombre</label>
+                <input type="text" id="seachConductor">
+                <button id="read">Buscar</button>
+                <section id="datos">
+                    <label id="nombreLabel"></label>
+                    <label id="apellidosLabel"></label>
+                    <label id="edadLabel"></label>
+                    <label id="phoneLabel"></label>
+                    <label id="emailLabel"></label>
+                    <label id="licenceLabel"></label>
+                </section>
+            </section>
         </section>
         <section id="agregarVehiculo">
             <h1>añadir nuevo vehiculo</h1>
@@ -107,6 +119,7 @@
 
     
 
-    
+    <script type="module" src="script.js" defer>
+    </script>
 </body>
 </html>

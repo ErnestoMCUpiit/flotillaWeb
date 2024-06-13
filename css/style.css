@@ -9,3 +9,13 @@ button{
 section{
     height: 20%;
 }
+#buscarConductor{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#datos{
+    display: flex;
+    justify-content:start;
+    flex-direction: column;
+}

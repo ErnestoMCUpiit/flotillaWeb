@@ -22,6 +22,14 @@ let apellidosInput = document.getElementById("apellidos");
 let licenceInput = document.getElementById("licence");
 let celularInput = document.getElementById("phone");
 let emailInput = document.getElementById("email");
+let searchConductor = document.getElementById("seachConductor");
+//labels para busqueda
+let nombreLabel = document.getElementById("nombreLabel");
+let apellidosLabel = document.getElementById("apellidosLabel");
+let edadLabel = document.getElementById("edadLabel");
+let phoneLabel = document.getElementById("phoneLabel");
+let emailLabel = document.getElementById("emailLabel");
+let licenceLabel = document.getElementById("licenceLabel");
 
 let readBtn = document.getElementById("read");
 let updBtn = document.getElementById("update");
@@ -54,7 +62,7 @@ const idCond = push(child(ref(db), 'conductores')).key;
 
 //leer conductor
 readBtn.addEventListener("click", function() {
-    readData(nombreInput.value);
+    readData(searchConductor.value);
 });        
 
 async function readData(nombreBuscado) {
@@ -66,13 +74,20 @@ async function readData(nombreBuscado) {
         const childKey = childSnapshot.key;
         const childData = childSnapshot.val().datos;
         if (childData.nombre === nombreBuscado) {
-            console.log('Nombre: ' + childData.nombre);
-            console.log('Apellidos: ' + childData.apellidos);
-            console.log('Edad: ' + childData.edad);
-            console.log('Licencia: ' + childData.licencia);
-            console.log('celular: ' + childData.celular);
-            console.log('email: ' + childData.email);
-            alert("leyendo por nombre correctamente");
+            nombreLabel.innerHTML = String(childData.nombre);
+            apellidosLabel.innerHTML = String(childData.apellidos);
+            edadLabel.innerHTML = String(childData.edad);
+            emailLabel.innerHTML = String(childData.email);
+            phoneLabel.innerHTML = String(childData.celular);
+            licenceLabel.innerHTML = String(childData.licencia);
+        }
+        else if(childData.licencia === nombreBuscado){
+            nombreLabel.innerHTML = String(childData.nombre);
+            apellidosLabel.innerHTML = String(childData.apellidos);
+            edadLabel.innerHTML = String(childData.edad);
+            emailLabel.innerHTML = String(childData.email);
+            phoneLabel.innerHTML = String(childData.celular);
+            licenceLabel.innerHTML = String(childData.licencia);
         }
         
     });
