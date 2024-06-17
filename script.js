@@ -98,6 +98,9 @@ async function readData(nombreBuscado) {
             phoneLabel.innerHTML = String(childData.celular);
             licenceLabel.innerHTML = String(childData.licencia);
         }
+        else{
+            alert("conductor no encontrado")
+        }
         
     });
     } 
@@ -150,7 +153,8 @@ async function nuevoVehiculo(){
             modelo: modeloInput.value,
             maxCarg : maxCargInput.value,
             dimention: dimentionInput.value,
-            state: stateInput.value
+            state: stateInput.value,
+            km: 0
         });
         alert("vehiculo agregado")
     } catch (error) {
