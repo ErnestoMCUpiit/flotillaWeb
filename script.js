@@ -198,6 +198,10 @@ async function addMantenimiento(){
                     descipcion: description,
                     fechaInicio: fecha
                 });
+                alert("mantenimiento agregado")
+                update(ref(db,"camiones/"+placa),{
+                    state:"inactivo"
+                });
             } catch (error) {
                 alert("Error");
                 console.log(error);
