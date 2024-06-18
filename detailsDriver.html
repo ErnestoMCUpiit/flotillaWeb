@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del Conductor</title>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getDatabase, ref, get, update, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDKYVXlZuKkYFeYKYNAYEz393La5Erl12c",
+            authDomain: "flotilla-d9efb.firebaseapp.com",
+            databaseURL: "https://flotilla-d9efb-default-rtdb.firebaseio.com",
+            projectId: "flotilla-d9efb",
+            storageBucket: "flotilla-d9efb.appspot.com",
+            messagingSenderId: "357309099599",
+            appId: "1:357309099599:web:d449d44db6f602c2d9c43a"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase();
+
+        document.addEventListener("DOMContentLoaded", async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+
+            const dbRef = ref(db, 'conductores/' + id);
+            const snapshot = await get(dbRef);
+
+            if (snapshot.exists()) {
+                const data = snapshot.val().datos;
+                document.getElementById('id').value = id;
+                document.getElementById('nombre').value = data.nombre;
+                document.getElementById('apellidos').value = data.apellidos;
+                document.getElementById('edad').value = data.edad;
+                document.getElementById('licencia').value = data.licencia;
+                document.getElementById('celular').value = data.celular;
+                document.getElementById('email').value = data.email;
+            } else {
+                console.log("No data available");
+            }
+
+            document.getElementById('save-button').addEventListener('click', async () => {
+                const updatedData = {
+                    datos: {
+                        nombre: document.getElementById('nombre').value,
+                        apellidos: document.getElementById('apellidos').value,
+                        edad: document.getElementById('edad').value,
+                        licencia: document.getElementById('licencia').value,
+                        celular: document.getElementById('celular').value,
+                        email: document.getElementById('email').value
+                    }
+                };
+                await update(dbRef, updatedData);
+                alert('Información actualizada');
+            });
+
+            document.getElementById('delete-button').addEventListener('click', async () => {
+                if (confirm('¿Estás seguro de que deseas eliminar este conductor?')) {
+                    await remove(dbRef);
+                    alert('Conductor eliminado');
+                    window.location.href = 'index.html';
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Detalle del Conductor</h1>
+    <form>
+        <label for="id">ID:</label>
+        <input type="text" id="id" disabled><br>
+
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre"><br>
+
+        <label for="apellidos">Apellidos:</label>
+        <input type="text" id="apellidos"><br>
+
+        <label for="edad">Edad:</label>
+        <input type="text" id="edad"><br>
+
+        <label for="licencia">Licencia:</label>
+        <input type="text" id="licencia"><br>
+
+        <label for="celular">Celular:</label>
+        <input type="text" id="celular"><br>
+
+        <label for="email">Email:</label>
+        <input type="text" id="email"><br>
+
+        <button type="button" id="save-button">Guardar</button>
+        <button type="button" id="delete-button">Eliminar</button>
+    </form>
+</body>
+</html>

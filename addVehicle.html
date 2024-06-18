@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Añadir Vehículo</title>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDKYVXlZuKkYFeYKYNAYEz393La5Erl12c",
+            authDomain: "flotilla-d9efb.firebaseapp.com",
+            databaseURL: "https://flotilla-d9efb-default-rtdb.firebaseio.com",
+            projectId: "flotilla-d9efb",
+            storageBucket: "flotilla-d9efb.appspot.com",
+            messagingSenderId: "357309099599",
+            appId: "1:357309099599:web:d449d44db6f602c2d9c43a"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase();
+
+        async function addCamion(event) {
+            event.preventDefault();
+
+            const placa = document.getElementById("placa").value;
+            const marca = document.getElementById("marca").value;
+            const modelo = document.getElementById("modelo").value;
+            const maxCarg = document.getElementById("maxCarg").value;
+            const dimention = document.getElementById("dimention").value;
+            const state = document.getElementById("state").value;
+
+            if (placa && marca && modelo && maxCarg && dimention && state) {
+                try {
+                    await set(ref(db, "camiones/" + placa), {
+                        marca: marca,
+                        modelo: modelo,
+                        maxCarg: maxCarg,
+                        dimention: dimention,
+                        state: state,
+                        km: 0
+                    });
+                    alert("Vehículo agregado");
+                } catch (error) {
+                    alert("Error");
+                    console.log(error);
+                }
+            } else {
+                alert("Por favor, completa todos los campos.");
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Añadir Vehículo</h1>
+    <form onsubmit="addCamion(event)">
+        <label for="placa">Placa:</label><br>
+        <input type="text" id="placa" name="placa"><br>
+        <label for="marca">Marca:</label><br>
+        <input type="text" id="marca" name="marca"><br>
+        <label for="modelo">Modelo:</label><br>
+        <input type="text" id="modelo" name="modelo"><br>
+        <label for="maxCarg">Máxima Carga:</label><br>
+        <input type="text" id="maxCarg" name="maxCarg"><br>
+        <label for="dimention">Dimensiones:</label><br>
+        <input type="text" id="dimention" name="dimention"><br>
+        <label for="state">Estado:</label><br>
+        <input type="text" id="state" name="state"><br><br>
+        <input type="submit" value="Añadir Camión">
+    </form>
+</body>
+</html>

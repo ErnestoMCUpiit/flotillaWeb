@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del Camión</title>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getDatabase, ref, get, update, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDKYVXlZuKkYFeYKYNAYEz393La5Erl12c",
+            authDomain: "flotilla-d9efb.firebaseapp.com",
+            databaseURL: "https://flotilla-d9efb-default-rtdb.firebaseio.com",
+            projectId: "flotilla-d9efb",
+            storageBucket: "flotilla-d9efb.appspot.com",
+            messagingSenderId: "357309099599",
+            appId: "1:357309099599:web:d449d44db6f602c2d9c43a"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase();
+
+        document.addEventListener("DOMContentLoaded", async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const placa = urlParams.get('placa');
+
+            const dbRef = ref(db, 'camiones/' + placa);
+            const snapshot = await get(dbRef);
+
+            if (snapshot.exists()) {
+                const data = snapshot.val();
+                document.getElementById('placa').value = placa;
+                document.getElementById('marca').value = data.marca;
+                document.getElementById('modelo').value = data.modelo;
+                document.getElementById('maxCarg').value = data.maxCarg;
+                document.getElementById('dimension').value = data.dimention;
+                document.getElementById('estado').value = data.state;
+            } else {
+                console.log("No data available");
+            }
+
+            document.getElementById('save-button').addEventListener('click', async () => {
+                const updatedData = {
+                    marca: document.getElementById('marca').value,
+                    modelo: document.getElementById('modelo').value,
+                    maxCarg: document.getElementById('maxCarg').value,
+                    dimension: document.getElementById('dimension').value,
+                    estado: document.getElementById('estado').value
+                };
+                await update(dbRef, updatedData);
+                alert('Información actualizada');
+            });
+
+            document.getElementById('delete-button').addEventListener('click', async () => {
+                if (confirm('¿Estás seguro de que deseas eliminar este camión?')) {
+                    await remove(dbRef);
+                    alert('Camión eliminado');
+                    window.location.href = 'index.html';
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <h1>Detalle del Camión</h1>
+    <form>
+        <label for="placa">Placa:</label>
+        <input type="text" id="placa" disabled><br>
+
+        <label for="marca">Marca:</label>
+        <input type="text" id="marca"><br>
+
+        <label for="modelo">Modelo:</label>
+        <input type="text" id="modelo"><br>
+
+        <label for="maxCarg">Max Carga:</label>
+        <input type="text" id="maxCarg"><br>
+
+        <label for="dimension">Dimensiones:</label>
+        <input type="text" id="dimension"><br>
+
+        <label for="estado">Estado:</label>
+        <select id="estado">
+            <option value="activo">Activo</option>
+            <option value="inactivo">Inactivo</option>
+        </select><br>
+
+        <button type="button" id="save-button">Guardar</button>
+        <button type="button" id="delete-button">Eliminar</button>
+    </form>
+</body>
+</html>

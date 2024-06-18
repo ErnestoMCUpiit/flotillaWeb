@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camiones</title>
+    <style>
+        .tab {
+            display: inline-block;
+            margin-right: 10px;
+            cursor: pointer;
+            padding: 10px;
+            background-color: #f1f1f1;
+            border: 1px solid #ccc;
+        }
+        .tab.active {
+            background-color: #ddd;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDKYVXlZuKkYFeYKYNAYEz393La5Erl12c",
+            authDomain: "flotilla-d9efb.firebaseapp.com",
+            databaseURL: "https://flotilla-d9efb-default-rtdb.firebaseio.com",
+            projectId: "flotilla-d9efb",
+            storageBucket: "flotilla-d9efb.appspot.com",
+            messagingSenderId: "357309099599",
+            appId: "1:357309099599:web:d449d44db6f602c2d9c43a"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase();
+
+        let camiones = [];
+
+        document.addEventListener("DOMContentLoaded", async () => {
+            const camionesTable = document.getElementById("camiones-table");
+
+            const dbRef = ref(db, 'camiones');
+            const snapshot = await get(dbRef);
+
+            if (snapshot.exists()) {
+                snapshot.forEach(childSnapshot => {
+                    const childData = childSnapshot.val();
+                    camiones.push({
+                        placa: childSnapshot.key,
+                        marca: childData.marca,
+                        modelo: childData.modelo,
+                        maxCarg: childData.maxCarg,
+                        dimension: childData.dimention,
+                        estado: childData.state
+                    });
+                });
+                renderTable();
+            } else {
+                console.log("No data available");
+            }
+
+            document.getElementById('search-bar').addEventListener('input', () => renderTable());
+            document.getElementById('tab-all').addEventListener('click', () => renderTable('all'));
+            document.getElementById('tab-active').addEventListener('click', () => renderTable('activo'));
+            document.getElementById('tab-inactive').addEventListener('click', () => renderTable('inactivo'));
+        });
+
+        function renderTable(filter = 'all') {
+            const camionesTable = document.getElementById("camiones-table");
+            const searchQuery = document.getElementById('search-bar').value.toLowerCase();
+
+            camionesTable.innerHTML = '';
+            
+            const filteredCamiones = camiones.filter(camion => {
+                const matchesSearch = camion.placa.toLowerCase().includes(searchQuery);
+                const matchesFilter = filter === 'all' || camion.estado.toLowerCase() === filter;
+                return matchesSearch && matchesFilter;
+            });
+
+            filteredCamiones.forEach(camion => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${camion.placa}</td>
+                    <td>${camion.marca}</td>
+                    <td>${camion.modelo}</td>
+                    <td>${camion.maxCarg}</td>
+                    <td>${camion.dimension}</td>
+                    <td>${camion.estado}</td>
+                `;
+                row.addEventListener('click', () => {
+                    window.location.href = `detailsVehicle.html?placa=${camion.placa}`;
+                });
+                camionesTable.appendChild(row);
+            });
+
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            if (filter === 'all') document.getElementById('tab-all').classList.add('active');
+            if (filter === 'activo') document.getElementById('tab-active').classList.add('active');
+            if (filter === 'inactivo') document.getElementById('tab-inactive').classList.add('active');
+        }
+    </script>
+</head>
+<body>
+    <h1>Vehículos</h1>
+    <input type="text" id="search-bar" placeholder="Buscar por placa...">
+    <button onclick="window.location.href='addVehicle.html'">Agregar Vehículo</button>
+    <div>
+        <span id="tab-all" class="tab active">Todos</span>
+        <span id="tab-active" class="tab">Activos</span>
+        <span id="tab-inactive" class="tab">Inactivos</span>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Placa</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Max Carga</th>
+                <th>Dimensiones</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody id="camiones-table">
+        </tbody>
+    </table>
+</body>
+</html>
