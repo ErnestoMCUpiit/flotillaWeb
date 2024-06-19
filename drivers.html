@@ -4,6 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Conductores</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
         import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
@@ -21,6 +35,8 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase();
 
+        let conductores = [];
+
         document.addEventListener("DOMContentLoaded", async () => {
             const conductoresTable = document.getElementById("conductores-table");
 
@@ -30,28 +46,59 @@
             if (snapshot.exists()) {
                 snapshot.forEach(childSnapshot => {
                     const childData = childSnapshot.val().datos;
-                    const row = document.createElement("tr");
-
-                    row.innerHTML = `
-                        <td>${childSnapshot.key}</td>
-                        <td>${childData.nombre}</td>
-                        <td>${childData.apellidos}</td>
-                        <td>${childData.edad}</td>
-                        <td>${childData.licencia}</td>
-                        <td>${childData.celular}</td>
-                        <td>${childData.email}</td>
-                    `;
-
-                    conductoresTable.appendChild(row);
+                    conductores.push({
+                        id: childSnapshot.key,
+                        nombre: childData.nombre,
+                        apellidos: childData.apellidos,
+                        edad: childData.edad,
+                        licencia: childData.licencia,
+                        celular: childData.celular,
+                        email: childData.email
+                    });
                 });
+                renderTable();
             } else {
                 console.log("No data available");
             }
+
+            document.getElementById('search-bar').addEventListener('input', renderTable);
         });
+
+        function renderTable() {
+            const conductoresTable = document.getElementById("conductores-table");
+            const searchQuery = document.getElementById('search-bar').value.toLowerCase();
+
+            conductoresTable.innerHTML = '';
+            
+            const filteredConductores = conductores.filter(conductor => 
+                conductor.nombre.toLowerCase().includes(searchQuery) || 
+                conductor.apellidos.toLowerCase().includes(searchQuery) || 
+                conductor.licencia.toLowerCase().includes(searchQuery)
+            );
+
+            filteredConductores.forEach(conductor => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${conductor.id}</td>
+                    <td>${conductor.nombre}</td>
+                    <td>${conductor.apellidos}</td>
+                    <td>${conductor.edad}</td>
+                    <td>${conductor.licencia}</td>
+                    <td>${conductor.celular}</td>
+                    <td>${conductor.email}</td>
+                `;
+                row.addEventListener('click', () => {
+                    window.location.href = `detalleConductor.html?id=${conductor.id}`;
+                });
+                conductoresTable.appendChild(row);
+            });
+        }
     </script>
 </head>
 <body>
     <h1>Conductores</h1>
+    <input type="text" id="search-bar" placeholder="Buscar por nombre, apellidos o licencia...">
+    <button onclick="window.location.href='addDriver.html'">Agregar Conductor</button>
     <table>
         <thead>
             <tr>
