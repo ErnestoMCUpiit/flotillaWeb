@@ -1,49 +1,66 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Añadir Conductor</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Agregar Conductor</title>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "API_KEY",
+            authDomain: "flotilla-d9efb.firebaseapp.com",
+            databaseURL: "https://flotilla-d9efb-default-rtdb.firebaseio.com",
+            projectId: "flotilla-d9efb",
+            storageBucket: "flotilla-d9efb.appspot.com",
+            messagingSenderId: "357309099599",
+            appId: "1:357309099599:web:d449d44db6f602c2d9c43a"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        document.getElementById('crear').addEventListener('click', () => {
+            const nombre = document.getElementById('nombre').value;
+            const apellidos = document.getElementById('apellidos').value;
+            const edad = document.getElementById('edad').value;
+            const licencia = document.getElementById('licence').value;
+            const celular = document.getElementById('phone').value;
+            const email = document.getElementById('email').value;
+
+            const idCond = push(ref(db, 'conductores')).key;
+
+            set(ref(db, `conductores/${idCond}/datos`), {
+                nombre,
+                apellidos,
+                edad,
+                licencia,
+                celular,
+                email
+            }).then(() => {
+                alert('Conductor agregado exitosamente');
+            }).catch(error => {
+                alert('Error al agregar el conductor');
+                console.error(error);
+            });
+        });
+    </script>
 </head>
 <body>
-    <header>
-        <h1>Añadir Nuevo Conductor</h1>
-    </header>
-
-    <article>
-        <section id="agregarConductor">
-            <h1>Formulario para Añadir Conductor</h1>
-            <form id="formAgregarConductor">
-                <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" name="nombre" required>
-                <br>
-
-                <label for="apellidos">Apellidos:</label>
-                <input type="text" id="apellidos" name="apellidos" required>
-                <br>
-
-                <label for="edad">Edad:</label>
-                <input type="number" id="edad" name="edad" required>
-                <br>
-
-                <label for="phone">Teléfono Celular:</label>
-                <input type="tel" id="phone" name="phone" required>
-                <br>
-
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-                <br>
-
-                <label for="licence">Número de Licencia:</label>
-                <input type="text" id="licence" name="licence" required>
-                <br>
-
-                <button type="submit" id="crear">Añadir Conductor</button>
-            </form>
-        </section>
-    </article>
-
-    <script type="module" src="script.js" defer></script>
+    <h1>Agregar Conductor</h1>
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre"><br>
+    <label for="apellidos">Apellidos:</label>
+    <input type="text" id="apellidos"><br>
+    <label for="edad">Edad:</label>
+    <input type="number" id="edad"><br>
+    <label for="licence">Licencia:</label>
+    <input type="text" id="licence"><br>
+    <label for="phone">Celular:</label>
+    <input type="tel" id="phone"><br>
+    <label for="email">Email:</label>
+    <input type="email" id="email"><br>
+    <button id="crear">Agregar Conductor</button>
 </body>
 </html>

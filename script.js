@@ -15,6 +15,20 @@ const app = initializeApp(firebaseConfig);
 
 import{getDatabase, ref,push, child, get,set,update,remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 const db = getDatabase();
+const storage = getStorage();
+
+// Referencias a los elementos de entrega
+let idCamionInput = document.getElementById("idCamion");
+let idConductorInput = document.getElementById("idConductor");
+let ubicacionInicialInput = document.getElementById("ubicacionInicial");
+let ubicacionFinalInput = document.getElementById("ubicacionFinal");
+let fechaInicialInput = document.getElementById("fechaInicial");
+let fechaFinalInput = document.getElementById("fechaFinal");
+let estadoInput = document.getElementById("estado");
+let descripcionInput = document.getElementById("descripcion");
+let fotoEntregaInput = document.getElementById("fotoEntrega");
+let crearEntregaBtn = document.getElementById("crearEntrega");
+
 //elementos conductor
 let nombreInput = document.getElementById("nombre");
 let edadInput = document.getElementById("edad");
@@ -64,6 +78,7 @@ let tipoMantInput = document.getElementById("tipo");
 let createCarBtn = document.getElementById("createVehiculoBtn");
 let addMant = document.getElementById("addMantenimiento");
 
+// entregas
 
 
 
