@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Conductores</title>
+    <link rel="stylesheet" href="css/drivers.css">
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
         import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
@@ -31,6 +32,7 @@
                 snapshot.forEach(childSnapshot => {
                     const childData = childSnapshot.val().datos;
                     const row = document.createElement("tr");
+                    row.classList.add('clickable-row');
 
                     row.innerHTML = `
                         <td>${childSnapshot.key}</td>
@@ -41,6 +43,10 @@
                         <td>${childData.celular}</td>
                         <td>${childData.email}</td>
                     `;
+
+                    row.addEventListener('click', () => {
+                        window.location.href = `detailsDriver.html?id=${childSnapshot.key}`;
+                    });
 
                     conductoresTable.appendChild(row);
                 });

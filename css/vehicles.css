@@ -1,0 +1,72 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7f9;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    color: #003366;
+}
+
+input#search-bar {
+    width: 300px;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    background-color: #003366;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+button:hover {
+    background-color: #002244;
+}
+
+.tab {
+    display: inline-block;
+    margin-right: 10px;
+    cursor: pointer;
+    padding: 10px 20px;
+    background-color: #e7e7e7;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.tab.active {
+    background-color: #003366;
+    color: #fff;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background-color: #003366;
+    color: #fff;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+.clickable-row {
+    cursor: pointer;
+}
