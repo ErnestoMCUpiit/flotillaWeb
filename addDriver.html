@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,6 +28,10 @@
             const licencia = document.getElementById('licence').value;
             const celular = document.getElementById('phone').value;
             const email = document.getElementById('email').value;
+            const tipoSangre = document.getElementById('tipoSangre').value;
+            const direccion = document.getElementById('direccion').value;
+            const seguro = document.getElementById('seguro').value;
+            const ganancias = 0;
 
             const idCond = push(ref(db, 'conductores')).key;
 
@@ -37,7 +41,13 @@
                 edad,
                 licencia,
                 celular,
-                email
+                email,
+                tipoSangre,
+                direccion,
+                seguro,
+                ganancias,
+                estado: 'disponible',
+                unidad: 'no asignado'
             }).then(() => {
                 alert('Conductor agregado exitosamente');
             }).catch(error => {
@@ -61,6 +71,14 @@
     <input type="tel" id="phone"><br>
     <label for="email">Email:</label>
     <input type="email" id="email"><br>
+    <label for="tipoSangre">Tipo de Sangre:</label>
+    <input type="text" id="tipoSangre"><br>
+    <label for="direccion">Dirección:</label>
+    <input type="text" id="direccion"><br>
+    <label for="seguro">Seguro:</label>
+    <input type="text" id="seguro"><br>
+
+
     <button id="crear">Agregar Conductor</button>
 </body>
 </html>

@@ -5,6 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Conductores</title>
     <style>
+        .tab {
+            display: inline-block;
+            margin-right: 10px;
+            cursor: pointer;
+            padding: 10px;
+            background-color: #f1f1f1;
+            border: 1px solid #ccc;
+        }
+        .tab.active {
+            background-color: #ddd;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
@@ -33,9 +44,10 @@
         };
 
         const app = initializeApp(firebaseConfig);
-        const db = getDatabase();
+        const db = getDatabase(app);
 
         let conductores = [];
+        let filter = 'all';
 
         document.addEventListener("DOMContentLoaded", async () => {
             const conductoresTable = document.getElementById("conductores-table");
@@ -53,7 +65,12 @@
                         edad: childData.edad,
                         licencia: childData.licencia,
                         celular: childData.celular,
-                        email: childData.email
+                        email: childData.email,
+                        tipoSangre: childData.tipoSangre,
+                        direccion: childData.direccion,
+                        seguro: childData.seguro,
+                        estado: childData.estado,
+                        unidad: childData.unidad
                     });
                 });
                 renderTable();
@@ -61,20 +78,23 @@
                 console.log("No data available");
             }
 
-            document.getElementById('search-bar').addEventListener('input', renderTable);
+            document.getElementById('search-bar').addEventListener('input', () => renderTable());
+            document.getElementById('tab-all').addEventListener('click', () => renderTable('all'));
+            document.getElementById('tab-active').addEventListener('click', () => renderTable('activo'));
+            document.getElementById('tab-inactive').addEventListener('click', () => renderTable('inactivo'));
         });
 
-        function renderTable() {
+        function renderTable(filter = 'all') {
             const conductoresTable = document.getElementById("conductores-table");
             const searchQuery = document.getElementById('search-bar').value.toLowerCase();
 
             conductoresTable.innerHTML = '';
             
-            const filteredConductores = conductores.filter(conductor => 
-                conductor.nombre.toLowerCase().includes(searchQuery) || 
-                conductor.apellidos.toLowerCase().includes(searchQuery) || 
-                conductor.licencia.toLowerCase().includes(searchQuery)
-            );
+            const filteredConductores = conductores.filter(conductor => {
+                const matchesSearch = conductor.nombre.toLowerCase().includes(searchQuery);
+                const matchesFilter = filter === 'all' || conductor.estado.toLowerCase() === filter;
+                return matchesSearch && matchesFilter;
+            });
 
             filteredConductores.forEach(conductor => {
                 const row = document.createElement("tr");
@@ -86,19 +106,34 @@
                     <td>${conductor.licencia}</td>
                     <td>${conductor.celular}</td>
                     <td>${conductor.email}</td>
+                    <td>${conductor.tipoSangre}</td>
+                    <td>${conductor.direccion}</td>
+                    <td>${conductor.seguro}</td>
+                    <td>${conductor.estado}</td>
+                    <td>${conductor.unidad}</td>
                 `;
                 row.addEventListener('click', () => {
-                    window.location.href = `detalleConductor.html?id=${conductor.id}`;
+                    window.location.href = `detailsDriver.html?id=${conductor.id}`;
                 });
                 conductoresTable.appendChild(row);
             });
+
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            if (filter === 'all') document.getElementById('tab-all').classList.add('active');
+            if (filter === 'activo') document.getElementById('tab-active').classList.add('active');
+            if (filter === 'inactivo') document.getElementById('tab-inactive').classList.add('active');
         }
     </script>
 </head>
 <body>
     <h1>Conductores</h1>
-    <input type="text" id="search-bar" placeholder="Buscar por nombre, apellidos o licencia...">
+    <input type="text" id="search-bar" placeholder="Buscar por nombre...">
     <button onclick="window.location.href='addDriver.html'">Agregar Conductor</button>
+    <div>
+        <span id="tab-all" class="tab active">Todos</span>
+        <span id="tab-active" class="tab">Activos</span>
+        <span id="tab-inactive" class="tab">Inactivos</span>
+    </div>
     <table>
         <thead>
             <tr>
@@ -109,6 +144,11 @@
                 <th>Licencia</th>
                 <th>Celular</th>
                 <th>Email</th>
+                <th>Tipo de sangre</th>
+                <th>Dirección</th>
+                <th>Seguro</th>
+                <th>Estado</th>
+                <th>Unidad</th>
             </tr>
         </thead>
         <tbody id="conductores-table">

@@ -34,8 +34,12 @@
                 document.getElementById('marca').value = data.marca;
                 document.getElementById('modelo').value = data.modelo;
                 document.getElementById('maxCarg').value = data.maxCarg;
-                document.getElementById('dimension').value = data.dimention;
-                document.getElementById('estado').value = data.state;
+                document.getElementById('dimension').value = data.dimension;
+
+                document.getElementById('viajes').textContent = `Viajes: ${data.viajes}`;
+                document.getElementById('gasolina').textContent = `Gasolina: ${data.gasolina}`;
+                document.getElementById('costos').textContent = `Costos: $${data.costos}`;
+                document.getElementById('ganancias').textContent = `Ganancias: $${data.ganancias}`;
             } else {
                 console.log("No data available");
             }
@@ -45,8 +49,7 @@
                     marca: document.getElementById('marca').value,
                     modelo: document.getElementById('modelo').value,
                     maxCarg: document.getElementById('maxCarg').value,
-                    dimension: document.getElementById('dimension').value,
-                    estado: document.getElementById('estado').value
+                    dimension: document.getElementById('dimension').value
                 };
                 await update(dbRef, updatedData);
                 alert('Información actualizada');
@@ -59,11 +62,21 @@
                     window.location.href = 'index.html';
                 }
             });
+
+            document.getElementById('add-order-button').addEventListener('click', () => {
+                window.location.href = `addOrders.html?placa=${placa}`;
+            });
+
+            document.getElementById('add-maintenance-button').addEventListener('click', () => {
+                window.location.href = `addMaintenance.html?placa=${placa}`;
+            });
         });
     </script>
 </head>
 <body>
     <h1>Detalle del Camión</h1>
+    <button id="add-order-button">Agregar Orden</button>
+    <button id="add-maintenance-button">Añadir Mantenimiento</button>
     <form>
         <label for="placa">Placa:</label>
         <input type="text" id="placa" disabled><br>
@@ -80,11 +93,10 @@
         <label for="dimension">Dimensiones:</label>
         <input type="text" id="dimension"><br>
 
-        <label for="estado">Estado:</label>
-        <select id="estado">
-            <option value="activo">Activo</option>
-            <option value="inactivo">Inactivo</option>
-        </select><br>
+        <p id="viajes">Viajes: </p>
+        <p id="gasolina">Gasolina: </p>
+        <p id="costos">Costos: </p>
+        <p id="ganancias">Ganancias: </p>
 
         <button type="button" id="save-button">Guardar</button>
         <button type="button" id="delete-button">Eliminar</button>

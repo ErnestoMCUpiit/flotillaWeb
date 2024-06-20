@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Órdenes</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDKYVXlZuKkYFeYKYNAYEz393La5Erl12c",
+            authDomain: "flotilla-d9efb.firebaseapp.com",
+            databaseURL: "https://flotilla-d9efb-default-rtdb.firebaseio.com",
+            projectId: "flotilla-d9efb",
+            storageBucket: "flotilla-d9efb.appspot.com",
+            messagingSenderId: "357309099599",
+            appId: "1:357309099599:web:d449d44db6f602c2d9c43a"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase();
+
+        let ordenes = [];
+
+        document.addEventListener("DOMContentLoaded", async () => {
+            const ordenesTable = document.getElementById("ordenes-table");
+
+            const dbRef = ref(db, 'entregas');
+            const snapshot = await get(dbRef);
+
+            if (snapshot.exists()) {
+                snapshot.forEach(childSnapshot => {
+                    const childData = childSnapshot.val();
+                    ordenes.push({
+                        id: childSnapshot.key,
+                        idCamion: childData.idCamion,
+                        idConductor: childData.idConductor,
+                        ubicacionInicial: childData.ubicacionInicial,
+                        ubicacionFinal: childData.ubicacionFinal,
+                        fechaInicial: childData.fechaInicial,
+                        fechaFinal: childData.fechaFinal,
+                        estado: childData.estado,
+                        descripcion: childData.descripcion
+                    });
+                });
+                renderTable();
+            } else {
+                console.log("No data available");
+            }
+
+            document.getElementById('search-bar').addEventListener('input', () => renderTable());
+            document.getElementById('tab-all').addEventListener('click', () => renderTable('all'));
+            document.getElementById('tab-recibido').addEventListener('click', () => renderTable('recibido'));
+            document.getElementById('tab-curso').addEventListener('click', () => renderTable('en curso'));
+            document.getElementById('tab-finalizado').addEventListener('click', () => renderTable('finalizado'));
+        });
+
+        function renderTable(filter = 'all') {
+            const ordenesTable = document.getElementById("ordenes-table");
+            const searchQuery = document.getElementById('search-bar').value.toLowerCase();
+
+            ordenesTable.innerHTML = '';
+            
+            const filteredOrdenes = ordenes.filter(orden => {
+                const matchesSearch = orden.idCamion.toLowerCase().includes(searchQuery);
+                const matchesFilter = filter === 'all' || orden.estado.toLowerCase() === filter;
+                return matchesSearch && matchesFilter;
+            });
+
+            filteredOrdenes.forEach(orden => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td>${orden.id}</td>
+                    <td>${orden.idCamion}</td>
+                    <td>${orden.idConductor}</td>
+                    <td>${orden.ubicacionInicial}</td>
+                    <td>${orden.ubicacionFinal}</td>
+                    <td>${orden.fechaInicial}</td>
+                    <td>${orden.fechaFinal}</td>
+                    <td>${orden.estado}</td>
+                    <td>${orden.descripcion}</td>
+                `;
+                row.addEventListener('click', () => {
+                    window.location.href = `detailsOrders.html?id=${orden.id}`;
+                });
+                ordenesTable.appendChild(row);
+            });
+
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            if (filter === 'all') document.getElementById('tab-all').classList.add('active');
+            if (filter === 'recibido') document.getElementById('tab-recibido').classList.add('active');
+            if (filter === 'en curso') document.getElementById('tab-curso').classList.add('active');
+            if (filter === 'finalizado') document.getElementById('tab-finalizado').classList.add('active');
+        }
+    </script>
+</head>
+<body>
+    <h1>Órdenes</h1>
+    <input type="text" id="search-bar" placeholder="Buscar por ID Camión...">
+    <button onclick="window.location.href='addOrders.html'">Agregar Entrega</button>
+    <div>
+        <span id="tab-all" class="tab active">Todos</span>
+        <span id="tab-recibido" class="tab active">Recibido</span>
+        <span id="tab-curso" class="tab">En Curso</span>
+        <span id="tab-finalizado" class="tab">Finalizado</span>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>ID Orden</th>
+                <th>ID Camión</th>
+                <th>ID Conductor</th>
+                <th>Ubicación Inicial</th>
+                <th>Ubicación Final</th>
+                <th>Fecha Inicial</th>
+                <th>Fecha Final</th>
+                <th>Estado</th>
+                <th>Descripción</th>
+            </tr>
+        </thead>
+        <tbody id="ordenes-table">
+        </tbody>
+    </table>
+</body>
+</html>

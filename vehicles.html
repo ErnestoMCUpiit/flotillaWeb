@@ -63,7 +63,8 @@
                         modelo: childData.modelo,
                         maxCarg: childData.maxCarg,
                         dimension: childData.dimention,
-                        estado: childData.state
+                        estado: childData.state,
+                        conductor: childData.conductor
                     });
                 });
                 renderTable();
@@ -98,6 +99,7 @@
                     <td>${camion.maxCarg}</td>
                     <td>${camion.dimension}</td>
                     <td>${camion.estado}</td>
+                    <td>${camion.conductor}</td>
                 `;
                 row.addEventListener('click', () => {
                     window.location.href = `detailsVehicle.html?placa=${camion.placa}`;
@@ -114,7 +116,7 @@
 </head>
 <body>
     <h1>Vehículos</h1>
-    <input type="text" id="search-bar" placeholder="Buscar por placa...">
+    <input type="button" id="search-bar" placeholder="Buscar por placa...">
     <button onclick="window.location.href='addVehicle.html'">Agregar Vehículo</button>
     <div>
         <span id="tab-all" class="tab active">Todos</span>
@@ -130,6 +132,7 @@
                 <th>Max Carga</th>
                 <th>Dimensiones</th>
                 <th>Estado</th>
+                <th>Conductor</th>
             </tr>
         </thead>
         <tbody id="camiones-table">

@@ -26,7 +26,8 @@ let fechaInicialInput = document.getElementById("fechaInicial");
 let fechaFinalInput = document.getElementById("fechaFinal");
 let estadoInput = document.getElementById("estado");
 let descripcionInput = document.getElementById("descripcion");
-let fotoEntregaInput = document.getElementById("fotoEntrega");
+let cliente = document.getElementById("cliente");
+let distancia = document.getElementById("distancia");
 let crearEntregaBtn = document.getElementById("crearEntrega");
 
 //elementos conductor
@@ -36,6 +37,13 @@ let apellidosInput = document.getElementById("apellidos");
 let licenceInput = document.getElementById("licence");
 let celularInput = document.getElementById("phone");
 let emailInput = document.getElementById("email");
+let tipoSangre = document.getElementById("tipoSangre");
+let direccion = document.getElementById("direccion");
+let seguro = document.getElementById("seguro");
+let estado = document.getElementById("estado");
+let unidad = document.getElementById("unidad");
+
+
 let searchConductor = document.getElementById("seachConductor");
 //labels para busqueda conductores
 let nombreLabel = document.getElementById("nombreLabel");
@@ -57,29 +65,33 @@ let delBtn = document.getElementById("delete");
 let newBtn = document.getElementById("crear")
 
 //elementos vehiculo
-
-
 let placaInput = document.getElementById("placa");
 let marcaInput = document.getElementById("marca");
 let modeloInput = document.getElementById("modelo");
 let maxCargInput = document.getElementById("maxCarg");
 let dimentionInput = document.getElementById("dimention");
 let stateInput = document.getElementById("state");
+let conductor = document.getElementById("conductor");
+
+let kilometraje = document.getElementById("kilometraje");
+let viajes = document.getElementById("viajes");
+let gasolina = document.getElementById("gasolina");
+let costos = document.getElementById("costos");
+let readVehiculeBtn = document.getElementById("readVehicle");
 let searchVehicule = document.getElementById("searchVehicule");
 
-let readVehiculeBtn = document.getElementById("readVehicle");
-
-//mantenimiento de un vehiculo
-let fechaMantenimientoInput = document.getElementById("fecha");
-let descMantInput = document.getElementById("description");
-let tipoMantInput = document.getElementById("tipo");
-
+// mantenimiento de un vehiculo
+let idVehicle = document.getElementById("idCamion");
+let type = document.getElementById("tipo");
+// check, maintenance
+let state = document.getElementById("estado");
+//scheduled, ongoing, finished; si en la app movil lo marcas como terminado se cambia el estado a finished
+let date = document.getElementById("fecha");
+let details = document.getElementById("detalles");
+let cost = document.getElementById("costo");
 
 let createCarBtn = document.getElementById("createVehiculoBtn");
 let addMant = document.getElementById("addMantenimiento");
-
-// entregas
-
 
 
 const idCond = push(child(ref(db), 'conductores')).key;

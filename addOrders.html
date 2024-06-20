@@ -6,8 +6,7 @@
     <title>Agregar Entrega</title>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
-        import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
+        import { getDatabase, ref, push, set, update, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDKYVXlZuKkYFeYKYNAYEz393La5Erl12c",
@@ -21,45 +20,98 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
-        const storage = getStorage(app);
 
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const placa = urlParams.get('placa');
+            const idCond = urlParams.get('idConductor');
+
+            if (placa) {
+                document.getElementById('idCamion').value = placa;
+            }
+
+            if (idCond) {
+                document.getElementById('idConductor').value = idCond;
+            }
+
             document.getElementById('crearEntrega').addEventListener('click', async () => {
+                const estado = document.getElementById('estado').value;
+                const costo = document.getElementById('costo').value;
+                const cliente = document.getElementById('cliente').value;
+                const descripcion = document.getElementById('descripcion').value;
                 const idCamion = document.getElementById('idCamion').value;
                 const idConductor = document.getElementById('idConductor').value;
+                const distancia = parseFloat(document.getElementById('distancia').value);
                 const ubicacionInicial = document.getElementById('ubicacionInicial').value;
                 const ubicacionFinal = document.getElementById('ubicacionFinal').value;
                 const fechaInicial = document.getElementById('fechaInicial').value;
                 const fechaFinal = document.getElementById('fechaFinal').value;
-                const estado = document.getElementById('estado').value;
-                const descripcion = document.getElementById('descripcion').value;
-                const fotoFile = document.getElementById('fotoEntrega').files[0];
 
                 const idEntrega = push(ref(db, 'entregas')).key;
 
                 try {
-                    // Subir la imagen a Firebase Storage
-                    const storageReference = storageRef(storage, 'entregas/' + idEntrega + '/foto.jpg');
-                    await uploadBytes(storageReference, fotoFile);
-                    const photoURL = await getDownloadURL(storageReference);
-
-                    // Guardar la entrega en la base de datos
                     await set(ref(db, 'entregas/' + idEntrega), {
+                        estado,
+                        costo,
+                        cliente,
+                        descripcion,
                         idCamion,
                         idConductor,
+                        distancia,
                         ubicacionInicial,
                         ubicacionFinal,
                         fechaInicial,
                         fechaFinal,
-                        estado,
-                        descripcion,
-                        fotoURL: photoURL
                     });
 
-                    alert('Entrega creada con éxito');
+                    // Actualizar el estado del vehículo
+                    const vehiculoRef = ref(db, 'camiones/' + idCamion);
+                    const condRef = ref(db, 'camiones/' + idConductor);
+                    const vehiculoSnapshot = await get(vehiculoRef);
+                    const condSnapshot = await get(condRef);
+
+                    if (vehiculoSnapshot.exists()) {
+                        const vehiculoData = vehiculoSnapshot.val();
+                        const nuevoKilometraje = vehiculoData.kilometraje + distancia;
+                        const nuevosViajes = vehiculoData.viajes + 1;
+                        const nuevaGasolina = vehiculoData.kmperl / distancia;
+                        const nuevosCostos = nuevaGasolina * 24;
+                        const nuevosGanancias = vehiculoData.nuevosGanancias + costo
+
+
+
+                        await update(vehiculoRef, {
+                            state: "activo",
+                            conductor: idConductor,
+                            kilometraje: nuevoKilometraje,
+                            viajes: nuevosViajes,
+                            gasolina: nuevaGasolina,
+                            costos: nuevosCostos,
+                            ganancias: nuevosGanancias
+                        });
+
+                        alert('Entrega creada con éxito y vehículo actualizado');
+                    } else {
+                        alert('El vehículo no existe');
+                    }
+
+                    if (condSnapshot.exists()) {
+                        const condData = condSnapshot.val();
+
+                        await update(vehiculoRef, {
+                            estado: "activo",
+                            unidad: idCamion,
+                            ganancias: costo
+                        });
+
+                        alert('Entrega creada con éxito');
+                    } else {
+                        alert('El conductor no existe');
+                    }
+
                     document.getElementById('entregaForm').reset();
                 } catch (error) {
-                    alert('Error al crear la entrega');
+                    alert('Error al crear la entrega o actualizar el vehículo');
                     console.error(error);
                 }
             });
@@ -69,28 +121,33 @@
 <body>
     <h1>Agregar Entrega</h1>
     <form id="entregaForm">
-        <label for="idCamion">ID Camión:</label>
-        <input type="text" id="idCamion" required><br>
-        <label for="idConductor">ID Conductor:</label>
-        <input type="text" id="idConductor" required><br>
-        <label for="ubicacionInicial">Ubicación Inicial:</label>
-        <input type="text" id="ubicacionInicial" required><br>
-        <label for="ubicacionFinal">Ubicación Final:</label>
-        <input type="text" id="ubicacionFinal" required><br>
-        <label for="fechaInicial">Fecha Inicial:</label>
-        <input type="date" id="fechaInicial" required><br>
-        <label for="fechaFinal">Fecha Final:</label>
-        <input type="date" id="fechaFinal" required><br>
         <label for="estado">Estado:</label>
         <select id="estado" required>
             <option value="recibido">Recibido</option>
             <option value="en curso">En Curso</option>
             <option value="finalizado">Finalizado</option>
         </select><br>
+        <label for="costo">Costo:</label>
+        <input type="number" id="costo" required><br>
+        <label for="cliente">Cliente:</label>
+        <input type="text" id="cliente" required><br>
         <label for="descripcion">Descripción:</label>
         <textarea id="descripcion" required></textarea><br>
-        <label for="fotoEntrega">Foto de la Entrega:</label>
-        <input type="file" id="fotoEntrega" required><br>
+        <label for="idCamion">Vehículo:</label>
+        <input type="text" id="idCamion" required><br>
+        <label for="idConductor">Conductor:</label>
+        <input type="text" id="idConductor" required><br>
+        <label for="distancia">Distancia:</label>
+        <input type="number" id="distancia" required><br>
+        <label for="ubicacionInicial">Partida:</label>
+        <input type="text" id="ubicacionInicial" required><br>
+        <label for="ubicacionFinal">Destino:</label>
+        <input type="text" id="ubicacionFinal" required><br>
+        <label for="fechaInicial">Fecha de partida:</label>
+        <input type="date" id="fechaInicial" required><br>
+        <label for="fechaFinal">Fecha de entrega:</label>
+        <input type="date" id="fechaFinal" required><br>
+        
         <button type="button" id="crearEntrega">Crear Entrega</button>
     </form>
 </body>
