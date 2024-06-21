@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Camiones</title>
+    <title>Vehículos</title>
     <link rel="stylesheet" href="css/vehicles.css">
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
@@ -74,7 +74,7 @@
                     <td>${camion.modelo}</td>
                     <td>${camion.maxCarg}</td>
                     <td>${camion.dimension}</td>
-                    <td>${camion.estado}</td>
+                    <td class="${camion.estado.toLowerCase()}">${camion.estado}</td>
                 `;
                 row.addEventListener('click', () => {
                     window.location.href = `detailsVehicle.html?placa=${camion.placa}`;
@@ -91,12 +91,17 @@
 </head>
 <body>
     <h1>Vehículos</h1>
-    <input type="text" id="search-bar" placeholder="Buscar por placa...">
-    <button onclick="window.location.href='addVehicle.html'">Agregar Vehículo</button>
-    <div>
-        <span id="tab-all" class="tab active">Todos</span>
-        <span id="tab-active" class="tab">Activos</span>
-        <span id="tab-inactive" class="tab">Inactivos</span>
+    <div class="controls">
+        <div class="search-container">
+            <input type="text" id="search-bar" placeholder="Buscar...">
+            <span class="search-icon">&#x1F50D;</span>
+        </div>
+        <div class="tabs">
+            <span id="tab-all" class="tab active">Todos</span>
+            <span id="tab-active" class="tab">Activos</span>
+            <span id="tab-inactive" class="tab">Inactivos</span>
+        </div>
+        <button onclick="window.location.href='addVehicle.html'">+ Agregar Vehículo</button>
     </div>
     <table>
         <thead>

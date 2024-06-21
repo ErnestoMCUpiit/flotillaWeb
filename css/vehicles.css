@@ -9,12 +9,54 @@ h1 {
     color: #003366;
 }
 
-input#search-bar {
-    width: 300px;
-    padding: 10px;
+.controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     margin-bottom: 20px;
+}
+
+.search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+#search-bar {
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+}
+
+.search-icon {
+    position: absolute;
+    right: 10px;
+    color: #aaa;
+}
+
+.tabs {
+    display: flex;
+    gap: 10px;
+}
+
+.tab {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #e7e7e7;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.tab:hover {
+    background-color: #ddd;
+}
+
+.tab.active {
+    background-color: #003366;
+    color: #fff;
+    border-color: #003366;
 }
 
 button {
@@ -24,32 +66,15 @@ button {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    margin-bottom: 20px;
 }
 
 button:hover {
     background-color: #002244;
 }
 
-.tab {
-    display: inline-block;
-    margin-right: 10px;
-    cursor: pointer;
-    padding: 10px 20px;
-    background-color: #e7e7e7;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.tab.active {
-    background-color: #003366;
-    color: #fff;
-}
-
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
 }
 
 th, td {
@@ -69,4 +94,16 @@ tr:hover {
 
 .clickable-row {
     cursor: pointer;
+}
+
+.activo {
+    color: green;
+}
+
+.inactivo {
+    color: red;
+}
+
+.ongoing {
+    color: orange;
 }
