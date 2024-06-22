@@ -1,10 +1,10 @@
 body {
-    background-color: #f8f9fa;
+    background-color: #fff;
     font-family: Arial, sans-serif;
 }
 
 h1 {
-    color: #000;
+    color: #173156;
     font-weight: bold;
 }
 
@@ -15,17 +15,8 @@ h1 {
     margin-bottom: 20px;
 }
 
-#search-bar {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    width: 100%;
-}
-
-.search-icon {
-    position: absolute;
-    right: 10px;
-    color: #aaa;
+.input-group {
+    width: 20%;
 }
 
 .table th, .table td {
@@ -55,7 +46,7 @@ h1 {
 }
 
 .nav-tabs .nav-link {
-    color: #007bff;
+    color: #173156;
 }
 
 .nav-tabs .nav-link.active {
@@ -70,14 +61,12 @@ h1 {
 }
 
 .btn-primary:hover {
-    background-color: #0f233c;
-    border-color: #0f233c;
+    background-color: #0b213a;
+    border-color: #0b213a;
 }
 
-.nav-tabs {
-    margin-bottom: 20px;
-}
-
-.search-container {
-    margin-bottom: 20px;
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

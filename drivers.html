@@ -4,7 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Conductores</title>
-    <link rel="stylesheet" href="css/drivers.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background-color: #fff;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            color: #000;
+            font-weight: bold;
+        }
+        .table th, .table td {
+            vertical-align: middle;
+        }
+        .table-hover tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+        .table-dark th {
+            background-color: #fff;
+            color: #000;
+            font-weight: bold;
+        }
+        .clickable-row {
+            cursor: pointer;
+        }
+        .clickable-row:hover {
+            background-color: #e7e7e7;
+        }
+        .btn-primary {
+            background-color: #173156;
+            border-color: #173156;
+        }
+        .btn-primary:hover {
+            background-color: #0b213a;
+            border-color: #0b213a;
+        }
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .controls {
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
         import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
@@ -57,21 +102,27 @@
     </script>
 </head>
 <body>
-    <h1>Conductores</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Apellidos</th>
-                <th>Edad</th>
-                <th>Licencia</th>
-                <th>Celular</th>
-                <th>Email</th>
-            </tr>
-        </thead>
-        <tbody id="conductores-table">
-        </tbody>
-    </table>
-</body>
+    <div class="container mt-4">
+        <div class="page-header">
+            <h1>Conductores</h1>
+            <button class="btn btn-primary mb-3" onclick="window.location.href='addDriver.html'">+ Agregar Conductor</button>
+        </div>
+        <table class="table table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Apellidos</th>
+                    <th>Edad</th>
+                    <th>Licencia</th>
+                    <th>Celular</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody id="conductores-table">
+            </tbody>
+        </table>
+    </div>
+ </body>
+
 </html>
