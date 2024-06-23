@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
+    background-color: #fff;
     margin: 0;
     padding: 20px;
 }
@@ -26,7 +26,7 @@ h1 {
 }
 
 .table-hover tbody tr:hover {
-    background-color: #f1f1f1;
+    background-color: #fff;
 }
 
 .table-dark th {
