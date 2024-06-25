@@ -54,8 +54,31 @@
             });
         });
     </script>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <header id="header">
+        <div class="icons">
+            <a href="in"></a>
+            <img src="assets/fleetslogo.png" alt="fleets logo" class="responsiveIcons">
+            <div id="spacer"></div>
+            <a href="index.html">
+            <img src="assets/fleetitle.png" alt="fleets title" class="responsivetitle">
+            </a>
+        </div>
+        
+        <nav id="principalNav">
+                <div class="dropdown">
+                    <img src="assets/add.png" alt="plus" class="responsivePlus">
+                    <div class="dropdown-options">
+                        <a href="addVehicle.html">Vehículos</a>
+                        <a href="addDriver.html">Conductor</a>
+                        <a href="addOrders.html">Orden</a>
+                        <a href="addMaintenance.html">Mantenimiento</a>
+                    </div>
+                </div>      
+        </nav>
+    </header>
     <h1>Agregar Vehículo</h1>
     <label for="placa">Placa:</label>
     <input type="text" id="placa"><br>

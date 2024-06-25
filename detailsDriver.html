@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalle del Conductor</title>
+    <title>Detalles del Conductor</title>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
         import { getDatabase, ref, get, update, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
@@ -78,9 +78,32 @@
             });
         });
     </script>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <h1>Detalle del Conductor</h1>
+    <header id="header">
+        <div class="icons">
+            <a href="in"></a>
+            <img src="assets/fleetslogo.png" alt="fleets logo" class="responsiveIcons">
+            <div id="spacer"></div>
+            <a href="index.html">
+            <img src="assets/fleetitle.png" alt="fleets title" class="responsivetitle">
+            </a>
+        </div>
+        
+        <nav id="principalNav">
+                <div class="dropdown">
+                    <img src="assets/add.png" alt="plus" class="responsivePlus">
+                    <div class="dropdown-options">
+                        <a href="addVehicle.html">Vehículos</a>
+                        <a href="addDriver.html">Conductor</a>
+                        <a href="addOrders.html">Orden</a>
+                        <a href="addMaintenance.html">Mantenimiento</a>
+                    </div>
+                </div>      
+        </nav>
+    </header>
+    <h1>Detalles del Conductor</h1>
     <button id="add-delivery-button">Agregar Orden</button>
     <form>
         <label for="nombre">Nombre:</label>

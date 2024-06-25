@@ -33,7 +33,7 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 0 0.5rem;
-    background-color: aquamarine;
+    background-color: white;
 }
 
 .icons {
@@ -54,8 +54,17 @@ header {
     max-width: 40px;
     height: auto;
 }
+
+.responsivePlus {
+    padding-top: 10%;
+    width: 37%;
+    max-width: 80px;
+    height: auto;
+}
+
 .responsivetitle{
-    height: 17%;
+    padding-top: 10%;
+    height: 20%;
     max-height: 40px;
     width: auto;
 }
@@ -133,4 +142,11 @@ hr{
     justify-content: space-between;
     align-items: center;
 
+}
+
+.dropdown img.addButton {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    
 }
