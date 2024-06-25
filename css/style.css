@@ -7,6 +7,11 @@ label{
     font-size: 1.5rem;
     width: 10em;
 }
+@media (min-width: 768px) {
+    .container, .container-md, .container-sm {
+        max-width: 100%; /* Override Bootstrap max-width */
+    }
+}
 
 button{
     width: 4rem;
@@ -32,7 +37,6 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 0.5rem;
     background-color: white;
 }
 
@@ -101,11 +105,11 @@ hr{
 .dropdown-options {
     display: none;
     position: absolute;
-    width: 120%;
+    width: 160%;
     min-width: 2rem;
     top: 100%;
-    /* right: 0%; */
-    background-color: #e3dede;
+    right: 60%;
+    background-color: #E9ECEF;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     /* z-index: 1; */
     border-radius: 5px;
@@ -121,7 +125,7 @@ hr{
 }
 
 .dropdown-options a:hover {
-    background-color: #f0f0f0;
+    background-color: #fff;
 }
 
 .dropdown:hover .dropdown-options {
@@ -149,4 +153,13 @@ hr{
     display: flex;
     align-items: center;
     
+}
+.nav-tabs .nav-link {
+    color: #173156;
+}
+.nav-tabs .nav-link.active {
+    color: #173156;
+    font-weight: bold;
+    border: none;
+    border-bottom: 2px solid #173156;
 }

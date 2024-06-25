@@ -7,7 +7,11 @@ h1 {
     color: #173156;
     font-weight: bold;
 }
-
+@media (min-width: 768px) {
+    .container, .container-md, .container-sm {
+        max-width: 100%; /* Override Bootstrap max-width */
+    }
+}
 .search-container {
     position: relative;
     display: flex;
@@ -44,17 +48,6 @@ h1 {
 .ongoing {
     color: orange;
 }
-
-.nav-tabs .nav-link {
-    color: #173156;
-}
-
-.nav-tabs .nav-link.active {
-    color: #495057;
-    background-color: #e9ecef;
-    border-color: #dee2e6 #dee2e6 #fff;
-}
-
 .btn-primary {
     background-color: #173156;
     border-color: #173156;
