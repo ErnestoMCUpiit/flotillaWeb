@@ -36,3 +36,8 @@ tr:hover {
 .clickable-row:hover {
     background-color: #e7e7e7;
 }
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
