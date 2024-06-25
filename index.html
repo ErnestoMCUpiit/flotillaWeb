@@ -36,7 +36,8 @@
                         const childData = childSnapshot.val();
                         orders.push(childData);
                     });
-                    renderOrdersChart(orders);
+                    console.log("Órdenes obtenidas:", orders); // Depuración
+                    renderOrdersStatus(orders);
                 } else {
                     console.log("No data available for orders");
                 }
@@ -91,55 +92,42 @@
             }
         });
 
-        function renderOrdersChart(orders) {
+        function renderOrdersStatus(orders) {
             const estados = orders.map(order => order.estado);
+            console.log("Estados de órdenes:", estados); // Depuración
+
             const estadosContados = {
                 programado: estados.filter(estado => estado === 'programado').length,
-                en_mantenimiento: estados.filter(estado => estado === 'en mantenimiento').length,
+                en_curso: estados.filter(estado => estado === 'en curso').length,
                 finalizado: estados.filter(estado => estado === 'finalizado').length,
                 recibido: estados.filter(estado => estado === 'recibido').length
             };
 
-            const ctx = document.getElementById('ordersChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'pie',
-                data: {
-                    labels: ['Programado', 'En Mantenimiento', 'Finalizado', 'Recibido'],
-                    datasets: [{
-                        label: 'Estado de Órdenes de Trabajo',
-                        data: [estadosContados.programado, estadosContados.en_mantenimiento, estadosContados.finalizado, estadosContados.recibido],
-                        backgroundColor: [
-                            '#b8efd0', // Programado
-                            '#f34239', // En Mantenimiento
-                            '#feebb3', // Finalizado
-                            '#42a5f5'  // Recibido
-                        ],
-                        borderColor: [
-                            '#63c477', // Programado
-                            '#006ab8', // En Mantenimiento
-                            '#e29019', // Finalizado
-                            '#1e88e5'  // Recibido
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            position: 'top',
-                        },
-                        tooltip: {
-                            callbacks: {
-                                label: function (tooltipItem) {
-                                    return tooltipItem.label + ': ' + tooltipItem.raw;
-                                }
-                            }
-                        }
-                    }
-                }
-            });
+            console.log("Conteo de estados:", estadosContados); // Depuración
+
+            const ordersContainer = document.getElementById('ordersStatusContainer');
+            ordersContainer.innerHTML = `
+                <div class="status-item">
+                    <div class="status-circle" style="background-color: #63c477;"></div>
+                    Programado
+                    <div class="status-number" style="background-color: rgba(99, 196, 119, 0.3); color: #63c477;">${estadosContados.programado}</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-circle" style="background-color: #e29019;"></div>
+                    En Curso
+                    <div class="status-number" style="background-color: rgba(226, 144, 25, 0.3); color: #e29019;">${estadosContados.en_curso}</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-circle" style="background-color: #f34239;"></div>
+                    Finalizado
+                    <div class="status-number" style="background-color: rgba(243, 66, 57, 0.3); color: #f34239;">${estadosContados.finalizado}</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-circle" style="background-color: #42a5f5;"></div>
+                    Recibido
+                    <div class="status-number" style="background-color: rgba(66, 165, 245, 0.3); color: #42a5f5;">${estadosContados.recibido}</div>
+                </div>
+            `;
         }
 
         function renderVehiculosStatus(vehiculos) {
@@ -186,7 +174,7 @@
                         label: 'Estado de Conductores',
                         data: [estadosContados.activo, estadosContados.inactivo],
                         backgroundColor: [
-                            '#b8efd0', // Activoss
+                            '#b8efd0', // Activos
                             '#f34239'  // Inactivos
                         ],
                         borderColor: [
@@ -253,9 +241,7 @@
 
             <section class="chart-section" id="ordersContainer">
                 <h2>Estado de Órdenes de Trabajo</h2>
-                <div class="chart-container">
-                    <canvas id="ordersChart"></canvas>
-                </div>
+                <div id="ordersStatusContainer" class="status-container"></div>
             </section>
 
             <section class="chart-section" id="conductoresContainer">
@@ -274,6 +260,3 @@
 </body>
 
 </html>
-
-
-//cambio
