@@ -81,31 +81,42 @@
             });
         });
     </script>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <h1>Detalle de la Orden</h1>
-    <form>
-        <label for="idCamion">Vehículo:</label>
-        <input type="text" id="idCamion" disabled><br>
+    <div class="sidebar">
+        <a href="index.html">Inicio</a>
+        <a href="drivers.html">Conductores</a>
+        <a href="orders.html">Órdenes</a>
+        <a href="vehicles.html">Vehículos</a>
+        <a href="maintenance.html">Mantenimientos</a>
+    </div>
+    <div class="main-content"> <!-- Añadido -->
+        <h1>Detalle de la Orden</h1>
+        <form>
+            <label for="idCamion">Vehículo:</label>
+            <input type="text" id="idCamion" disabled><br>
 
-        <label for="idConductor">Conductor:</label>
-        <input type="text" id="idConductor"><br>
+            <label for="idConductor">Conductor:</label>
+            <input type="text" id="idConductor"><br>
 
-        <label for="fechaInicial">Fecha Inicial:</label>
-        <input type="date" id="fechaInicial"><br>
+            <label for="fechaInicial">Fecha Inicial:</label>
+            <input type="date" id="fechaInicial"><br>
 
-        <label for="estado">Estado:</label>
-        <select id="estado">
-            <option value="recibido">Recibido</option>
-            <option value="en curso">En Curso</option>
-            <option value="finalizado">Finalizado</option>
-        </select><br>
+            <label for="estado">Estado:</label>
+            <select id="estado">
+                <option value="recibido">Recibido</option>
+                <option value="en curso">En Curso</option>
+                <option value="finalizado">Finalizado</option>
+            </select><br>
 
-        <label for="descripcion">Descripción:</label>
-        <textarea id="descripcion"></textarea><br>
+            <label for="descripcion">Descripción:</label>
+            <textarea id="descripcion"></textarea><br>
 
-        <button type="button" id="save-button">Guardar</button>
-        <button type="button" id="delete-button">Eliminar</button>
-    </form>
+            <button type="button" id="save-button">Guardar</button>
+            <button type="button" id="delete-button">Eliminar</button>
+        </form>
+    </div> <!-- Añadido -->
+
 </body>
 </html>

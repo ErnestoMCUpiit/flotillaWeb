@@ -72,34 +72,45 @@
             });
         });
     </script>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <h1>Detalle del Camión</h1>
-    <button id="add-order-button">Agregar Orden</button>
-    <button id="add-maintenance-button">Añadir Mantenimiento</button>
-    <form>
-        <label for="placa">Placa:</label>
-        <input type="text" id="placa" disabled><br>
+    <div class="sidebar">
+        <a href="index.html">Inicio</a>
+        <a href="drivers.html">Conductores</a>
+        <a href="orders.html">Órdenes</a>
+        <a href="vehicles.html">Vehículos</a>
+        <a href="maintenance.html">Mantenimientos</a>
+    </div>
+    <div class="main-content"> <!-- Añadido -->
+        <h1>Detalle del Camión</h1>
+        <button id="add-order-button">Agregar Orden</button>
+        <button id="add-maintenance-button">Añadir Mantenimiento</button>
+        <form>
+            <label for="placa">Placa:</label>
+            <input type="text" id="placa" disabled><br>
 
-        <label for="marca">Marca:</label>
-        <input type="text" id="marca"><br>
+            <label for="marca">Marca:</label>
+            <input type="text" id="marca"><br>
 
-        <label for="modelo">Modelo:</label>
-        <input type="text" id="modelo"><br>
+            <label for="modelo">Modelo:</label>
+            <input type="text" id="modelo"><br>
 
-        <label for="maxCarg">Max Carga:</label>
-        <input type="text" id="maxCarg"><br>
+            <label for="maxCarg">Max Carga:</label>
+            <input type="text" id="maxCarg"><br>
 
-        <label for="dimension">Dimensiones:</label>
-        <input type="text" id="dimension"><br>
+            <label for="dimension">Dimensiones:</label>
+            <input type="text" id="dimension"><br>
 
-        <p id="viajes">Viajes: </p>
-        <p id="gasolina">Gasolina: </p>
-        <p id="costos">Costos: </p>
-        <p id="ganancias">Ganancias: </p>
+            <p id="viajes">Viajes: </p>
+            <p id="gasolina">Gasolina: </p>
+            <p id="costos">Costos: </p>
+            <p id="ganancias">Ganancias: </p>
 
-        <button type="button" id="save-button">Guardar</button>
-        <button type="button" id="delete-button">Eliminar</button>
-    </form>
+            <button type="button" id="save-button">Guardar</button>
+            <button type="button" id="delete-button">Eliminar</button>
+        </form>
+    </div> <!-- Añadido -->
+
 </body>
 </html>

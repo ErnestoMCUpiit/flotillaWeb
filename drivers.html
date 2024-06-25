@@ -124,35 +124,45 @@
             if (filter === 'inactivo') document.getElementById('tab-inactive').classList.add('active');
         }
     </script>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <h1>Conductores</h1>
-    <input type="text" id="search-bar" placeholder="Buscar por nombre...">
-    <button onclick="window.location.href='addDriver.html'">Agregar Conductor</button>
-    <div>
-        <span id="tab-all" class="tab active">Todos</span>
-        <span id="tab-active" class="tab">Activos</span>
-        <span id="tab-inactive" class="tab">Inactivos</span>
+    <div class="sidebar">
+        <a href="index.html">Inicio</a>
+        <a href="drivers.html">Conductores</a>
+        <a href="orders.html">Órdenes</a>
+        <a href="vehicles.html">Vehículos</a>
+        <a href="maintenance.html">Mantenimientos</a>
     </div>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Apellidos</th>
-                <th>Edad</th>
-                <th>Licencia</th>
-                <th>Celular</th>
-                <th>Email</th>
-                <th>Tipo de sangre</th>
-                <th>Dirección</th>
-                <th>Seguro</th>
-                <th>Estado</th>
-                <th>Unidad</th>
-            </tr>
-        </thead>
-        <tbody id="conductores-table">
-        </tbody>
-    </table>
+    <div class="main-content"> <!-- Añadido -->
+        <h1>Conductores</h1>
+        <input type="text" id="search-bar" placeholder="Buscar por nombre...">
+        <button onclick="window.location.href='addDriver.html'">Agregar Conductor</button>
+        <div>
+            <span id="tab-all" class="tab active">Todos</span>
+            <span id="tab-active" class="tab">Activos</span>
+            <span id="tab-inactive" class="tab">Inactivos</span>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Apellidos</th>
+                    <th>Edad</th>
+                    <th>Licencia</th>
+                    <th>Celular</th>
+                    <th>Email</th>
+                    <th>Tipo de sangre</th>
+                    <th>Dirección</th>
+                    <th>Seguro</th>
+                    <th>Estado</th>
+                    <th>Unidad</th>
+                </tr>
+            </thead>
+            <tbody id="conductores-table">
+            </tbody>
+        </table>
+    </div> <!-- Añadido -->
 </body>
 </html>

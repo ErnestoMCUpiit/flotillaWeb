@@ -113,30 +113,41 @@
             if (filter === 'inactivo') document.getElementById('tab-inactive').classList.add('active');
         }
     </script>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <h1>Vehículos</h1>
-    <input type="button" id="search-bar" placeholder="Buscar por placa...">
-    <button onclick="window.location.href='addVehicle.html'">Agregar Vehículo</button>
-    <div>
-        <span id="tab-all" class="tab active">Todos</span>
-        <span id="tab-active" class="tab">Activos</span>
-        <span id="tab-inactive" class="tab">Inactivos</span>
+    <div class="sidebar">
+        <a href="index.html">Inicio</a>
+        <a href="drivers.html">Conductores</a>
+        <a href="orders.html">Órdenes</a>
+        <a href="vehicles.html">Vehículos</a>
+        <a href="maintenance.html">Mantenimientos</a>
     </div>
-    <table>
-        <thead>
-            <tr>
-                <th>Placa</th>
-                <th>Marca</th>
-                <th>Modelo</th>
-                <th>Max Carga</th>
-                <th>Dimensiones</th>
-                <th>Estado</th>
-                <th>Conductor</th>
-            </tr>
-        </thead>
-        <tbody id="camiones-table">
-        </tbody>
-    </table>
+    <div class="main-content"> <!-- Añadido -->
+        <h1>Vehículos</h1>
+        <input type="button" id="search-bar" placeholder="Buscar por placa...">
+        <button onclick="window.location.href='addVehicle.html'">Agregar Vehículo</button>
+        <div>
+            <span id="tab-all" class="tab active">Todos</span>
+            <span id="tab-active" class="tab">Activos</span>
+            <span id="tab-inactive" class="tab">Inactivos</span>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Placa</th>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>Max Carga</th>
+                    <th>Dimensiones</th>
+                    <th>Estado</th>
+                    <th>Conductor</th>
+                </tr>
+            </thead>
+            <tbody id="camiones-table">
+            </tbody>
+        </table>
+    </div> <!-- Añadido -->
+
 </body>
 </html>

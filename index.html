@@ -1,138 +1,276 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flotilla web</title>
-
     <link rel="stylesheet" href="css/style.css">
-    
-</head>
-<body>
-    <header>
-        <h1>Página agregar atributos</h1>
-    </header>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-    <article>
-        <section id="agregarConductor">
-            <section id="addConductor">
-                <h1>añadir nuevo conductor</h1>
-                <label for="nombre">Nombre</label>
-                <input type="text" id="nombre">
-                <br>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDKYVXlZuKkYFeYKYNAYEz393La5Erl12c",
+            authDomain: "flotilla-d9efb.firebaseapp.com",
+            databaseURL: "https://flotilla-d9efb-default-rtdb.firebaseio.com",
+            projectId: "flotilla-d9efb",
+            storageBucket: "flotilla-d9efb.appspot.com",
+            messagingSenderId: "357309099599",
+            appId: "1:357309099599:web:d449d44db6f602c2d9c43a"
+        };
 
-                <label for="apellidos">Apellidos</label>
-                <input type="text" id="apellidos">
-                <br>
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
 
-                <label for="edad">edad</label>
-                <input type="text" id="edad">
-                <br>
-                <label for="phone">telefono celular</label>
-                <input type="text" id="phone">
-                <br>
-                <label for="email">email</label>
-                <input type="email" id="email">
-                <br>
-                <label for="licence">numero de licencia</label>
-                <input type="text" id="licence">
-                <br>
-                <br>
-                <button  id="crear">Añadir nuevos conductores</button>
-                
-                <button id="update">Update</button>
-                <button id="delete">delete</button>
-            </section>
-            <section id="buscarConductor">
-                
-                <label for="seachConductor">Ingresa Licencia o nombre</label>
-                <input type="text" id="seachConductor">
-                <button id="read">Buscar</button>
-                <section id="datos">
-                    <label id="nombreLabel"></label>
-                    <label id="apellidosLabel"></label>
-                    <label id="edadLabel"></label>
-                    <label id="phoneLabel"></label>
-                    <label id="emailLabel"></label>
-                    <label id="licenceLabel"></label>
-                </section>
-            </section>
-        </section>
-        <section id="vehiculo">
-            <section id="agregarVehiculo">
-                <h1>añadir nuevo vehiculo</h1>
-                <br>
-                <label for="placa">Placa</label>
-                <input type="text" id="placa">
-                <br>
-                <br>
-                <label for="marca">Marca</label>
-                <input type="text" id="marca">
-                <br>
-                <br>
-                <label for="modelo">Modelo</label>
-                <input type="text" id="modelo">
-                <br>
-                <br>
-                <label for="maxCarg">Carga máxima</label>
-                <input type="text" id="maxCarg">
-                <br>
-                <br>
-                <label for="dimention">Dimensiones</label>
-                <input type="text" id="dimention">
-                <br>
-                <br>
-                <label for="state">Estado</label>
-                <input type="text" id="state">
-                <br>
+        document.addEventListener("DOMContentLoaded", async () => {
+            try {
+                // Obtener datos de las órdenes
+                const ordersRef = ref(db, 'entregas');
+                const ordersSnapshot = await get(ordersRef);
 
-                <section id="btnsVehiculo">
-                    <button id="createVehiculoBtn" >añadir coche</button>
-                </section>
-            </section>
-            <section id="buscarVehiculo">
-                <h2>Buscar vehiculo por placa</h2>
-                <label for="searchVehicle">Ingresa Licencia o nombre</label>
-                <input type="text" id="searchVehicle">
-                <button id="readVehicle">Buscar</button>
-                <section id="datos">
-                    <label id="marcaLabel"></label>
-                    <label id="modeloLabel"></label>
-                    <label id="dimentionsLabel"></label>
-                    <label id="maxCargLabel"></label>
-                    <label id="stateLabel"></label>
-                </section>
-            </section>
-            
-        </section>
-        <section id="agregar mantenimiento">
-            <h2>agregar mantenimiento a vehiculo</h2>
-            <br>
-            <label for="placaMant">Placa del vehiculo</label>
-            <input type="text" id="placaMant">
-            <br>
-            <label for="tipo">Tipo de mantenimiento</label>
-            <input type="text" id="tipo">
-            <br>
-            <label for="decription">Descripción</label>
-            <input type="text" id="description">
-            <br>
-            <label for="fecha">fecha</label>
-            <input type="date" id="fecha">
-            <br>
-            <button id="addMantenimiento">Añadir mantenimiento</button>
-        </section>
-    </article>
-    <br>
-    <br>
-    <br>
+                const orders = [];
+                if (ordersSnapshot.exists()) {
+                    ordersSnapshot.forEach(childSnapshot => {
+                        const childData = childSnapshot.val();
+                        orders.push(childData);
+                    });
+                    renderOrdersChart(orders);
+                } else {
+                    console.log("No data available for orders");
+                }
 
+                // Obtener datos de los vehículos
+                const vehiculosRef = ref(db, 'camiones');
+                const vehiculosSnapshot = await get(vehiculosRef);
 
-    
+                const vehiculos = [];
+                if (vehiculosSnapshot.exists()) {
+                    vehiculosSnapshot.forEach(childSnapshot => {
+                        const childData = childSnapshot.val();
+                        vehiculos.push(childData);
+                    });
+                    renderVehiculosStatus(vehiculos);
+                } else {
+                    console.log("No data available for vehicles");
+                }
 
-    
+                // Obtener datos de los conductores
+                const conductoresRef = ref(db, 'conductores');
+                const conductoresSnapshot = await get(conductoresRef);
 
-    <script type="module" src="script.js" defer>
+                const conductores = [];
+                if (conductoresSnapshot.exists()) {
+                    conductoresSnapshot.forEach(childSnapshot => {
+                        const childData = childSnapshot.val();
+                        conductores.push(childData);
+                    });
+                    renderConductoresChart(conductores);
+                } else {
+                    console.log("No data available for conductores");
+                }
+
+                // Obtener datos de mantenimiento
+                const mantenimientoRef = ref(db, 'mantenimiento');
+                const mantenimientoSnapshot = await get(mantenimientoRef);
+
+                const mantenimientos = [];
+                if (mantenimientoSnapshot.exists()) {
+                    mantenimientoSnapshot.forEach(childSnapshot => {
+                        const childData = childSnapshot.val();
+                        mantenimientos.push(childData);
+                    });
+                    renderMantenimientoStatus(mantenimientos);
+                } else {
+                    console.log("No data available for mantenimiento");
+                }
+
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        });
+
+        function renderOrdersChart(orders) {
+            const estados = orders.map(order => order.estado);
+            const estadosContados = {
+                programado: estados.filter(estado => estado === 'programado').length,
+                en_mantenimiento: estados.filter(estado => estado === 'en mantenimiento').length,
+                finalizado: estados.filter(estado => estado === 'finalizado').length,
+                recibido: estados.filter(estado => estado === 'recibido').length
+            };
+
+            const ctx = document.getElementById('ordersChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Programado', 'En Mantenimiento', 'Finalizado', 'Recibido'],
+                    datasets: [{
+                        label: 'Estado de Órdenes de Trabajo',
+                        data: [estadosContados.programado, estadosContados.en_mantenimiento, estadosContados.finalizado, estadosContados.recibido],
+                        backgroundColor: [
+                            '#b8efd0', // Programado
+                            '#f34239', // En Mantenimiento
+                            '#feebb3', // Finalizado
+                            '#42a5f5'  // Recibido
+                        ],
+                        borderColor: [
+                            '#63c477', // Programado
+                            '#006ab8', // En Mantenimiento
+                            '#e29019', // Finalizado
+                            '#1e88e5'  // Recibido
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (tooltipItem) {
+                                    return tooltipItem.label + ': ' + tooltipItem.raw;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderVehiculosStatus(vehiculos) {
+            const estados = vehiculos.map(vehiculo => vehiculo.state);
+            const estadosContados = {
+                activo: estados.filter(estado => estado === 'activo').length,
+                inactivo: estados.filter(estado => estado === 'inactivo').length,
+                en_mantenimiento: estados.filter(estado => estado === 'en mantenimiento').length
+            };
+
+            const vehiculosContainer = document.getElementById('vehiculosStatusContainer');
+            vehiculosContainer.innerHTML = `
+                <div class="status-item">
+                    <div class="status-circle" style="background-color: #63c477;"></div>
+                    Activo
+                    <div class="status-number" style="background-color: rgba(99, 196, 119, 0.3); color: #63c477;">${estadosContados.activo}</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-circle" style="background-color: #006ab8;"></div>
+                    Inactivo
+                    <div class="status-number" style="background-color: rgba(0, 106, 184, 0.3); color: #006ab8;">${estadosContados.inactivo}</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-circle" style="background-color: #e29019;"></div>
+                    En Mantenimiento
+                    <div class="status-number" style="background-color: rgba(226, 144, 25, 0.3); color: #e29019;">${estadosContados.en_mantenimiento}</div>
+                </div>
+            `;
+        }
+
+        function renderConductoresChart(conductores) {
+            const estados = conductores.map(conductor => conductor.datos.estado);
+            const estadosContados = {
+                activo: estados.filter(estado => estado === 'activo').length,
+                inactivo: estados.filter(estado => estado === 'inactivo').length
+            };
+
+            const ctx = document.getElementById('conductoresChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Activos', 'Inactivos'],
+                    datasets: [{
+                        label: 'Estado de Conductores',
+                        data: [estadosContados.activo, estadosContados.inactivo],
+                        backgroundColor: [
+                            '#b8efd0', // Activos
+                            '#f34239'  // Inactivos
+                        ],
+                        borderColor: [
+                            '#63c477', // Activos
+                            '#006ab8'  // Inactivos
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function (tooltipItem) {
+                                    return tooltipItem.label + ': ' + tooltipItem.raw;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderMantenimientoStatus(mantenimientos) {
+            const total = mantenimientos.length;
+            const programado = mantenimientos.filter(mantenimiento => mantenimiento.state === 'scheduled').length;
+            const enProgreso = mantenimientos.filter(mantenimiento => mantenimiento.state === 'ongoing').length;
+
+            const mantenimientoContainer = document.getElementById('mantenimientoStatusContainer');
+            mantenimientoContainer.innerHTML = `
+                <div class="status-percentage">
+                    <div class="percentage" style="color: #e29019;">${programado}</div>
+                    <div class="percentage" style="color: #63c477;">${enProgreso}</div>
+                </div>
+                <div class="status-description">
+                    <div>Programado</div>
+                    <div>En Progreso</div>
+                </div>
+            `;
+        }
     </script>
+</head>
+
+<body>
+    <div class="sidebar">
+        <a href="index.html">Inicio</a>
+        <a href="drivers.html">Conductores</a>
+        <a href="orders.html">Órdenes</a>
+        <a href="vehicles.html">Vehículos</a>
+        <a href="maintenance.html">Mantenimientos</a>
+    </div>
+
+    <div class="main-content">
+        <div class="charts-container">
+            <section class="chart-section" id="vehiculosContainer">
+                <h2>Estado de Vehículos</h2>
+                <div id="vehiculosStatusContainer" class="status-container"></div>
+            </section>
+
+            <section class="chart-section" id="ordersContainer">
+                <h2>Estado de Órdenes de Trabajo</h2>
+                <div class="chart-container">
+                    <canvas id="ordersChart"></canvas>
+                </div>
+            </section>
+
+            <section class="chart-section" id="conductoresContainer">
+                <h2>Estado de Conductores</h2>
+                <div class="chart-container">
+                    <canvas id="conductoresChart"></canvas>
+                </div>
+            </section>
+
+            <section class="chart-section" id="mantenimientoContainer">
+                <h2>Estado de Mantenimientos</h2>
+                <div id="mantenimientoStatusContainer" class="status-container"></div>
+            </section>
+        </div>
+    </div>
 </body>
+
 </html>

@@ -117,38 +117,49 @@
             });
         });
     </script>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <h1>Agregar Entrega</h1>
-    <form id="entregaForm">
-        <label for="estado">Estado:</label>
-        <select id="estado" required>
-            <option value="recibido">Recibido</option>
-            <option value="en curso">En Curso</option>
-            <option value="finalizado">Finalizado</option>
-        </select><br>
-        <label for="costo">Costo:</label>
-        <input type="number" id="costo" required><br>
-        <label for="cliente">Cliente:</label>
-        <input type="text" id="cliente" required><br>
-        <label for="descripcion">Descripción:</label>
-        <textarea id="descripcion" required></textarea><br>
-        <label for="idCamion">Vehículo:</label>
-        <input type="text" id="idCamion" required><br>
-        <label for="idConductor">Conductor:</label>
-        <input type="text" id="idConductor" required><br>
-        <label for="distancia">Distancia:</label>
-        <input type="number" id="distancia" required><br>
-        <label for="ubicacionInicial">Partida:</label>
-        <input type="text" id="ubicacionInicial" required><br>
-        <label for="ubicacionFinal">Destino:</label>
-        <input type="text" id="ubicacionFinal" required><br>
-        <label for="fechaInicial">Fecha de partida:</label>
-        <input type="date" id="fechaInicial" required><br>
-        <label for="fechaFinal">Fecha de entrega:</label>
-        <input type="date" id="fechaFinal" required><br>
-        
-        <button type="button" id="crearEntrega">Crear Entrega</button>
-    </form>
-</body>
+    <div class="sidebar">
+        <a href="index.html">Inicio</a>
+        <a href="drivers.html">Conductores</a>
+        <a href="orders.html">Órdenes</a>
+        <a href="vehicles.html">Vehículos</a>
+        <a href="maintenance.html">Mantenimientos</a>
+    </div>
+    <div class="main-content"> <!-- Añadido -->
+        <h1>Agregar Entrega</h1>
+        <form id="entregaForm">
+            <label for="estado">Estado:</label>
+            <select id="estado" required>
+                <option value="recibido">Recibido</option>
+                <option value="en curso">En Curso</option>
+                <option value="finalizado">Finalizado</option>
+            </select><br>
+            <label for="costo">Costo:</label>
+            <input type="number" id="costo" required><br>
+            <label for="cliente">Cliente:</label>
+            <input type="text" id="cliente" required><br>
+            <label for="descripcion">Descripción:</label>
+            <textarea id="descripcion" required></textarea><br>
+            <label for="idCamion">Vehículo:</label>
+            <input type="text" id="idCamion" required><br>
+            <label for="idConductor">Conductor:</label>
+            <input type="text" id="idConductor" required><br>
+            <label for="distancia">Distancia:</label>
+            <input type="number" id="distancia" required><br>
+            <label for="ubicacionInicial">Partida:</label>
+            <input type="text" id="ubicacionInicial" required><br>
+            <label for="ubicacionFinal">Destino:</label>
+            <input type="text" id="ubicacionFinal" required><br>
+            <label for="fechaInicial">Fecha de partida:</label>
+            <input type="date" id="fechaInicial" required><br>
+            <label for="fechaFinal">Fecha de entrega:</label>
+            <input type="date" id="fechaFinal" required><br>
+            
+            <button type="button" id="crearEntrega">Crear Entrega</button>
+        </form>
+    </div> <!-- Añadido -->
+
+    </body>
 </html>
