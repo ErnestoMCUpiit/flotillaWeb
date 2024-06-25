@@ -122,14 +122,10 @@
             }
 
             document.getElementById('search-bar').addEventListener('input', () => renderTable());
-            document.querySelectorAll('.nav-link').forEach(tab => {
-                tab.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    document.querySelectorAll('.nav-link').forEach(tab => tab.classList.remove('active'));
-                    e.target.classList.add('active');
-                    renderTable(e.target.dataset.filter);
-                });
-            });
+            document.getElementById('tab-all').addEventListener('click', () => renderTable('all'));
+            document.getElementById('tab-active').addEventListener('click', () => renderTable('active'));
+            document.getElementById('tab-inactive').addEventListener('click', () => renderTable('inactive'));
+            document.getElementById('tab-finished').addEventListener('click', () => renderTable('finished'));
         });
 
         function renderTable(filter = 'all') {
