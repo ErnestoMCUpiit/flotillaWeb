@@ -36,21 +36,22 @@
             font-weight: bold;
         }
         .activo {
-            color: green;
+            color: rgb(17, 110, 17);
         }
         .inactivo {
-            color: red;
+            color: rgb(132, 11, 11);
         }
         .ongoing {
-            color: orange;
+            color: rgb(181, 130, 34);
         }
         .nav-tabs .nav-link {
             color: #173156;
         }
         .nav-tabs .nav-link.active {
-            color: #495057;
-            background-color: #e9ecef;
-            border-color: #dee2e6 #dee2e6 #fff;
+            color: #173156;
+            font-weight: bold;
+            border: none;
+            border-bottom: 2px solid #173156;
         }
         .btn-primary {
             background-color: #173156;
@@ -113,6 +114,8 @@
             document.querySelectorAll('.nav-link').forEach(tab => {
                 tab.addEventListener('click', (e) => {
                     e.preventDefault();
+                    document.querySelectorAll('.nav-link').forEach(tab => tab.classList.remove('active'));
+                    e.target.classList.add('active');
                     renderTable(e.target.dataset.filter);
                 });
             });
@@ -139,19 +142,14 @@
                     <td>${camion.modelo}</td>
                     <td>${camion.maxCarg}</td>
                     <td>${camion.dimension}</td>
+                    <td>${camion.estado}</td>
                     <td>${camion.conductor}</td>
-                    <td class="${camion.estado.toLowerCase()}">${camion.estado}</td>
                 `;
                 row.addEventListener('click', () => {
                     window.location.href = `detailsVehicle.html?placa=${camion.placa}`;
                 });
                 camionesTable.appendChild(row);
             });
-
-            document.querySelectorAll('.nav-link').forEach(tab => tab.classList.remove('active'));
-            if (filter === 'all') document.querySelector('[data-filter="all"]').classList.add('active');
-            if (filter === 'activo') document.querySelector('[data-filter="activo"]').classList.add('active');
-            if (filter === 'inactivo') document.querySelector('[data-filter="inactivo"]').classList.add('active');
         }
     </script>
     <link rel="stylesheet" href="css/style.css">
@@ -163,23 +161,21 @@
             <img src="assets/fleetslogo.png" alt="fleets logo" class="responsiveIcons">
             <div id="spacer"></div>
             <a href="index.html">
-            <img src="assets/fleetitle.png" alt="fleets title" class="responsivetitle">
+                <img src="assets/fleetitle.png" alt="fleets title" class="responsivetitle">
             </a>
         </div>
         
         <nav id="principalNav">
-                <div class="dropdown">
-                    <img src="assets/add.png" alt="plus" class="responsivePlus">
-                    <div class="dropdown-options">
-                        <a href="addVehicle.html">Vehículos</a>
-                        <a href="addDriver.html">Conductor</a>
-                        <a href="addOrders.html">Orden</a>
-                        <a href="addMaintenance.html">Mantenimiento</a>
-                    </div>
-                </div>      
+            <div class="dropdown">
+                <img src="assets/add.png" alt="plus" class="responsivePlus">
+                <div class="dropdown-options">
+                    <a href="addVehicle.html">Vehículos</a>
+                    <a href="addDriver.html">Conductor</a>
+                    <a href="addOrders.html">Orden</a>
+                    <a href="addMaintenance.html">Mantenimiento</a>
+                </div>
+            </div>      
         </nav>
-        
-
     </header>
     <div class="container mt-4">
         <div class="page-header">
@@ -205,7 +201,6 @@
                 </span>
             </div>
         </div>
-
         <table class="table table-hover">
             <thead class="table-dark">
                 <tr>
