@@ -4,29 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Conductores</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-        .tab {
-            display: inline-block;
-            margin-right: 10px;
-            cursor: pointer;
-            padding: 10px;
+        body {
+            background-color: #fff;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            color: #000;
+            font-weight: bold;
+        }
+        .table th, .table td {
+            vertical-align: middle;
+        }
+        .table-hover tbody tr:hover {
             background-color: #f1f1f1;
-            border: 1px solid #ccc;
         }
-        .tab.active {
-            background-color: #ddd;
+        .table-dark th {
+            background-color: #fff;
+            color: #000;
+            font-weight: bold;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
+        .clickable-row {
+            cursor: pointer;
         }
-        th, td {
-            padding: 10px;
-            border: 1px solid #ddd;
-            text-align: left;
+        .clickable-row:hover {
+            background-color: #e7e7e7;
         }
-        tr:hover {
-            background-color: #f5f5f5;
+        .btn-primary {
+            background-color: #173156;
+            border-color: #173156;
+        }
+        .btn-primary:hover {
+            background-color: #0b213a;
+            border-color: #0b213a;
+        }
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .controls {
+            display: flex;
+            flex-direction: column;
         }
     </style>
     <script type="module">
@@ -72,6 +93,29 @@
                         estado: childData.estado,
                         unidad: childData.unidad
                     });
+                    const row = document.createElement("tr");
+                    row.classList.add('clickable-row');
+
+                    row.innerHTML = `
+                        <td>${childSnapshot.key}</td>
+                        <td>${childData.nombre}</td>
+                        <td>${childData.apellidos}</td>
+                        <td>${childData.edad}</td>
+                        <td>${childData.licencia}</td>
+                        <td>${childData.celular}</td>
+                        <td>${childData.email}</td>
+                        <td>${childData.tipoSangre}</td>
+                        <td>${childData.direccion}</td>
+                        <td>${childData.seguro}</td>
+                        <td>${childData.estado}</td>
+                        <td>${childData.unidad}</td>
+                    `;
+
+                    row.addEventListener('click', () => {
+                        window.location.href = `detailsDriver.html?id=${childSnapshot.key}`;
+                    });
+
+                    conductoresTable.appendChild(row);
                 });
                 renderTable();
             } else {
@@ -152,33 +196,39 @@
         
 
     </header>
-    <h1>Conductores</h1>
-    <input type="text" id="search-bar" placeholder="Buscar por nombre...">
-    <button onclick="window.location.href='addDriver.html'">Agregar Conductor</button>
-    <div>
-        <span id="tab-all" class="tab active">Todos</span>
-        <span id="tab-active" class="tab">Activos</span>
-        <span id="tab-inactive" class="tab">Inactivos</span>
+
+    <div class="container mt-4">
+        <div class="page-header">
+            <h1>Conductores</h1>
+            <input type="text" id="search-bar" placeholder="Buscar por nombre...">
+            <button class="btn btn-primary mb-3" onclick="window.location.href='addDriver.html'">+ Agregar Conductor</button>
+        </div>
+        <div>
+            <span id="tab-all" class="tab active">Todos</span>
+            <span id="tab-active" class="tab">Activos</span>
+            <span id="tab-inactive" class="tab">Inactivos</span>
+        </div>
+        <table class="table table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Apellidos</th>
+                    <th>Edad</th>
+                    <th>Licencia</th>
+                    <th>Celular</th>
+                    <th>Email</th>
+                    <th>Tipo de sangre</th>
+                    <th>Dirección</th>
+                    <th>Seguro</th>
+                    <th>Estado</th>
+                    <th>Unidad</th>
+                </tr>
+            </thead>
+            <tbody id="conductores-table">
+            </tbody>
+        </table>
     </div>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Apellidos</th>
-                <th>Edad</th>
-                <th>Licencia</th>
-                <th>Celular</th>
-                <th>Email</th>
-                <th>Tipo de sangre</th>
-                <th>Dirección</th>
-                <th>Seguro</th>
-                <th>Estado</th>
-                <th>Unidad</th>
-            </tr>
-        </thead>
-        <tbody id="conductores-table">
-        </tbody>
-    </table>
-</body>
+ </body>
+
 </html>

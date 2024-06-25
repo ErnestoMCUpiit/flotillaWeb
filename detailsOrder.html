@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle de la Órden</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/detailsOrder.css">
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getDatabase, ref, get, update, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDKYVXlZuKkYFeYKYNAYEz393La5Erl12c",
+            authDomain: "flotilla-d9efb.firebaseapp.com",
+            databaseURL: "https://flotilla-d9efb-default-rtdb.firebaseio.com",
+            projectId: "flotilla-d9efb",
+            storageBucket: "flotilla-d9efb.appspot.com",
+            messagingSenderId: "357309099599",
+            appId: "1:357309099599:web:d449d44db6f602c2d9c43a"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase();
+
+        document.addEventListener("DOMContentLoaded", async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const idOrder = urlParams.get('id');
+
+            const dbRef = ref(db, 'entregas/' + idOrder);
+            const snapshot = await get(dbRef);
+
+            if (snapshot.exists()) {
+                const data = snapshot.val();
+                document.getElementById('idCamion').value = data.idCamion || '';
+                document.getElementById('idConductor').value = data.idConductor || '';
+                document.getElementById('ubicacionInicial').value = data.ubicacionInicial || '';
+                document.getElementById('ubicacionFinal').value = data.ubicacionFinal || '';
+                document.getElementById('fechaInicial').value = data.fechaInicial || '';
+                document.getElementById('fechaFinal').value = data.fechaFinal || '';
+                document.getElementById('estado').value = data.estado || '';
+                document.getElementById('descripcion').value = data.descripcion || '';
+            } else {
+                console.log("No data available");
+            }
+
+            document.getElementById('save-button').addEventListener('click', async () => {
+                const updatedData = {
+                    idCamion: document.getElementById('idCamion').value,
+                    idConductor: document.getElementById('idConductor').value,
+                    ubicacionInicial: document.getElementById('ubicacionInicial').value,
+                    ubicacionFinal: document.getElementById('ubicacionFinal').value,
+                    fechaInicial: document.getElementById('fechaInicial').value,
+                    fechaFinal: document.getElementById('fechaFinal').value,
+                    estado: document.getElementById('estado').value,
+                    descripcion: document.getElementById('descripcion').value
+                };
+                await update(dbRef, updatedData);
+                alert('Información actualizada');
+            });
+
+            document.getElementById('delete-button').addEventListener('click', async () => {
+                if (confirm('¿Estás seguro de que deseas eliminar esta orden?')) {
+                    await remove(ref(db, 'entregas/' + idOrder));
+                    alert('Orden eliminada');
+                    window.location.href = 'orders.html';
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Detalle de la Órden</h1>
+        <div class="form-container">
+            <form>
+                <div class="form-group">
+                    <label for="idCamion">Vehículo:</label>
+                    <input type="text" id="idCamion" class="form-control" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="idConductor">Conductor:</label>
+                    <input type="text" id="idConductor" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="ubicacionInicial">Ubicación Inicial:</label>
+                    <input type="text" id="ubicacionInicial" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="ubicacionFinal">Ubicación Final:</label>
+                    <input type="text" id="ubicacionFinal" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="fechaInicial">Fecha Inicial:</label>
+                    <input type="date" id="fechaInicial" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="fechaFinal">Fecha Final:</label>
+                    <input type="date" id="fechaFinal" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="estado">Estado:</label>
+                    <select id="estado" class="form-control">
+                        <option value="recibido">Recibido</option>
+                        <option value="en curso">En Curso</option>
+                        <option value="finalizado">Finalizado</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="descripcion">Descripción:</label>
+                    <textarea id="descripcion" class="form-control"></textarea>
+                </div>
+                <button type="button" id="save-button" class="btn btn-success">Guardar</button>
+                <button type="button" id="delete-button" class="btn btn-danger">Eliminar</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

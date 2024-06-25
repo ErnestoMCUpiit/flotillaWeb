@@ -1,0 +1,39 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7f9;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    color: #003366;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background-color: #003366;
+    color: #fff;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+.clickable-row {
+    cursor: pointer;
+}
+
+.clickable-row:hover {
+    background-color: #e7e7e7;
+}
