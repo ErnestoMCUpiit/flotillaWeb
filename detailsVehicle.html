@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalles del Vehículo</title>
+    <title>Detalle del Vehiculo</title>
+    <link rel="stylesheet" href="css/detailsVehicle.css">
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
         import { getDatabase, ref, get, update, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
@@ -72,32 +73,149 @@
             });
         });
     </script>
-    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #070707;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #173156;
+            font-weight: bold;
+        }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #173156;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background-color: #002244;
+        }
+
+        button#delete-button {
+            background-color: #cc0000;
+        }
+
+        button#delete-button:hover {
+            background-color: #990000;
+        }
+
+        /* Estilos adicionales para la barra superior */
+        header {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            justify-content: space-between; /* Para mover el icono a la derecha */
+        }
+
+        .icons {
+            display: flex;
+            align-items: center;
+        }
+
+        .responsiveIcons {
+            height: 30px; /* Ajustar el tamaño del ícono */
+            margin-right: 10px;
+        }
+
+        .responsivetitle {
+            height: 30px; /* Ajustar el tamaño del título */
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-options {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            right: 0; /* Para alinear las opciones del dropdown a la derecha */
+        }
+
+        .dropdown:hover .dropdown-options {
+            display: block;
+        }
+
+        .dropdown-options a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-options a:hover {
+            background-color: #f1f1f1;
+        }
+
+        nav#principalNav {
+            display: flex;
+            align-items: center;
+        }
+    </style>
 </head>
 <body>
     <header id="header">
         <div class="icons">
-            <a href="in"></a>
             <img src="assets/fleetslogo.png" alt="fleets logo" class="responsiveIcons">
-            <div id="spacer"></div>
             <a href="index.html">
-            <img src="assets/fleetitle.png" alt="fleets title" class="responsivetitle">
+                <img src="assets/fleetitle.png" alt="fleets title" class="responsivetitle">
             </a>
         </div>
         
         <nav id="principalNav">
-                <div class="dropdown">
-                    <img src="assets/add.png" alt="plus" class="responsivePlus">
-                    <div class="dropdown-options">
-                        <a href="addVehicle.html">Vehículos</a>
-                        <a href="addDriver.html">Conductor</a>
-                        <a href="addOrders.html">Orden</a>
-                        <a href="addMaintenance.html">Mantenimiento</a>
-                    </div>
-                </div>      
+            <div class="dropdown">
+                <img src="assets/add.png" alt="plus" class="responsivePlus" style="height: 30px;">
+                <div class="dropdown-options">
+                    <a href="addVehicle.html">Vehículos</a>
+                    <a href="addDriver.html">Conductor</a>
+                    <a href="addOrders.html">Orden</a>
+                    <a href="addMaintenance.html">Mantenimiento</a>
+                </div>
+            </div>      
         </nav>
     </header>
-    <h1>Detalles del Vehículo</h1>
+    <h1>Detalle del Camión</h1>
     <button id="add-order-button">Agregar Orden</button>
     <button id="add-maintenance-button">Añadir Mantenimiento</button>
     <form>

@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalles del Conductor</title>
+    <title>Detalle del Conductor</title>
+    <link rel="stylesheet" href="css/detailsDriver.css">
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
         import { getDatabase, ref, get, update, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
@@ -23,13 +24,14 @@
 
         document.addEventListener("DOMContentLoaded", async () => {
             const urlParams = new URLSearchParams(window.location.search);
-            const idCond = urlParams.get('id');
+            const id = urlParams.get('id');
 
-            const dbRef = ref(db, 'conductores/' + idCond + '/datos');
+            const dbRef = ref(db, 'conductores/' + id + '/datos');
             const snapshot = await get(dbRef);
 
             if (snapshot.exists()) {
                 const data = snapshot.val();
+                document.getElementById('id').value = id;
                 document.getElementById('nombre').value = data.nombre;
                 document.getElementById('apellidos').value = data.apellidos;
                 document.getElementById('edad').value = data.edad;
@@ -39,13 +41,10 @@
                 document.getElementById('tipoSangre').value = data.tipoSangre;
                 document.getElementById('direccion').value = data.direccion;
                 document.getElementById('seguro').value = data.seguro;
-
-                const gananciasElement = document.getElementById('ganancias');
-                gananciasElement.textContent = `Ganancias: $${data.ganancias}`;
+                document.getElementById('ganancias').value = data.ganancias;
             } else {
                 console.log("No data available");
             }
-            
 
             document.getElementById('save-button').addEventListener('click', async () => {
                 const updatedData = {
@@ -58,7 +57,7 @@
                     tipoSangre: document.getElementById('tipoSangre').value,
                     direccion: document.getElementById('direccion').value,
                     seguro: document.getElementById('seguro').value,
-                    ganancias: document.getElementById('ganancias').value
+                    ganancias: parseFloat(document.getElementById('ganancias').value)
                 };
                 await update(dbRef, updatedData);
                 alert('Información actualizada');
@@ -66,46 +65,40 @@
 
             document.getElementById('delete-button').addEventListener('click', async () => {
                 if (confirm('¿Estás seguro de que deseas eliminar este conductor?')) {
-                    await remove(ref(db, 'conductores/' + idCond));
+                    await remove(ref(db, 'conductores/' + id));
                     alert('Conductor eliminado');
                     window.location.href = 'drivers.html';
                 }
             });
-
-            document.getElementById('add-delivery-button').addEventListener('click', () => {
-                const idCond = urlParams.get('id');  // Get the idConductor from the current page
-                window.location.href = ``;
-            });
         });
     </script>
-    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <header id="header">
         <div class="icons">
-            <a href="in"></a>
             <img src="assets/fleetslogo.png" alt="fleets logo" class="responsiveIcons">
-            <div id="spacer"></div>
             <a href="index.html">
-            <img src="assets/fleetitle.png" alt="fleets title" class="responsivetitle">
+                <img src="assets/fleetitle.png" alt="fleets title" class="responsivetitle">
             </a>
         </div>
         
         <nav id="principalNav">
-                <div class="dropdown">
-                    <img src="assets/add.png" alt="plus" class="responsivePlus">
-                    <div class="dropdown-options">
-                        <a href="addVehicle.html">Vehículos</a>
-                        <a href="addDriver.html">Conductor</a>
-                        <a href="addOrders.html">Orden</a>
-                        <a href="addMaintenance.html">Mantenimiento</a>
-                    </div>
-                </div>      
+            <div class="dropdown">
+                <img src="assets/add.png" alt="plus" class="responsivePlus" style="height: 30px;">
+                <div class="dropdown-options">
+                    <a href="addVehicle.html">Vehículos</a>
+                    <a href="addDriver.html">Conductor</a>
+                    <a href="addOrders.html">Orden</a>
+                    <a href="addMaintenance.html">Mantenimiento</a>
+                </div>
+            </div>      
         </nav>
     </header>
-    <h1>Detalles del Conductor</h1>
-    <button id="add-delivery-button">Agregar Orden</button>
+    <h1>Detalle del Conductor</h1>
     <form>
+        <label for="id">ID:</label>
+        <input type="text" id="id" disabled><br>
+
         <label for="nombre">Nombre:</label>
         <input type="text" id="nombre"><br>
 
@@ -133,9 +126,11 @@
         <label for="seguro">Seguro:</label>
         <input type="text" id="seguro"><br>
 
+        <label for="ganancias">Ganancias:</label>
+        <input type="number" id="ganancias" step="0.01"><br>
+
         <button type="button" id="save-button">Guardar</button>
-        <button type="button" id="delete-button">Eliminar</button><br>
+        <button type="button" id="delete-button">Eliminar</button>
     </form>
-    <p id="ganancias">Ganancias: $0</p>
 </body>
 </html>

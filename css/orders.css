@@ -1,0 +1,131 @@
+body {
+    background-color: #fff;
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    color: #173156;
+    font-weight: bold;
+}
+
+.search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.input-group {
+    width: 20%;
+}
+
+.table th, .table td {
+    vertical-align: middle;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.table-dark th {
+    background-color: #ffffff;
+    color: #000000;
+    font-weight: bold;
+}
+
+.activo {
+    color: green;
+}
+
+.inactivo {
+    color: red;
+}
+
+.ongoing {
+    color: orange;
+}
+
+.nav-tabs .nav-link {
+    color: #173156;
+}
+
+.nav-tabs .nav-link.active {
+    color: #495057;
+    background-color: #e9ecef;
+    border-color: #dee2e6 #dee2e6 #fff;
+}
+
+.btn-primary {
+    background-color: #173156;
+    border-color: #173156;
+}
+
+.btn-primary:hover {
+    background-color: #0b213a;
+    border-color: #0b213a;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Estilos adicionales para la barra superior */
+header {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    justify-content: space-between; /* Para mover el icono a la derecha */
+}
+
+.icons {
+    display: flex;
+    align-items: center;
+}
+
+.responsiveIcons {
+    height: 30px; /* Ajustar el tamaño del ícono */
+    margin-right: 10px;
+}
+
+.responsivetitle {
+    height: 30px; /* Ajustar el tamaño del título */
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-options {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    right: 0; /* Para alinear las opciones del dropdown a la derecha */
+}
+
+.dropdown:hover .dropdown-options {
+    display: block;
+}
+
+.dropdown-options a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-options a:hover {
+    background-color: #f1f1f1;
+}
+
+nav#principalNav {
+    display: flex;
+    align-items: center;
+}

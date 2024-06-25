@@ -30,36 +30,21 @@
 
             if (snapshot.exists()) {
                 const data = snapshot.val();
-
-                // Check for fecha inicial
-                if (data.fechaInicial) {
-                    document.getElementById('fechaInicial').value = data.fechaInicial;
-                } else {
-                    // Set a default value or leave it blank
-                    document.getElementById('fechaInicial').value = '';
-                }
-
-                // Repeat checks for estado and descripcion
-                if (data.estado) {
-                    document.getElementById('estado').value = data.estado;
-                } else {
-                    // Set a default value or leave it blank
-                    document.getElementById('estado').value = '';
-                }
-
-                if (data.descripcion) {
-                    document.getElementById('descripcion').value = data.descripcion;
-                } else {
-                    // Set a default value or leave it blank
-                    document.getElementById('descripcion').value = '';
-                }
-            }
-            else {
+                document.getElementById('idCamion').value = data.idCamion || '';
+                document.getElementById('idConductor').value = data.idConductor || '';
+                document.getElementById('ubicacionInicial').value = data.ubicacionInicial || '';
+                document.getElementById('ubicacionFinal').value = data.ubicacionFinal || '';
+                document.getElementById('fechaInicial').value = data.fechaInicial || '';
+                document.getElementById('fechaFinal').value = data.fechaFinal || '';
+                document.getElementById('estado').value = data.estado || '';
+                document.getElementById('descripcion').value = data.descripcion || '';
+            } else {
                 console.log("No data available");
             }
 
             document.getElementById('save-button').addEventListener('click', async () => {
                 const updatedData = {
+                    idCamion: document.getElementById('idCamion').value,
                     idConductor: document.getElementById('idConductor').value,
                     ubicacionInicial: document.getElementById('ubicacionInicial').value,
                     ubicacionFinal: document.getElementById('ubicacionFinal').value,
@@ -81,56 +66,73 @@
             });
         });
     </script>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/detailsOrders.css">
 </head>
 <body>
     <header id="header">
         <div class="icons">
-            <a href="in"></a>
             <img src="assets/fleetslogo.png" alt="fleets logo" class="responsiveIcons">
-            <div id="spacer"></div>
             <a href="index.html">
-            <img src="assets/fleetitle.png" alt="fleets title" class="responsivetitle">
+                <img src="assets/fleetitle.png" alt="fleets title" class="responsivetitle">
             </a>
         </div>
         
         <nav id="principalNav">
-                <div class="dropdown">
-                    <img src="assets/add.png" alt="plus" class="responsivePlus">
-                    <div class="dropdown-options">
-                        <a href="addVehicle.html">Vehículos</a>
-                        <a href="addDriver.html">Conductor</a>
-                        <a href="addOrders.html">Orden</a>
-                        <a href="addMaintenance.html">Mantenimiento</a>
-                    </div>
-                </div>      
+            <div class="dropdown">
+                <img src="assets/add.png" alt="plus" class="responsivePlus" style="height: 30px;">
+                <div class="dropdown-options">
+                    <a href="addVehicle.html">Vehículos</a>
+                    <a href="addDriver.html">Conductor</a>
+                    <a href="addOrders.html">Orden</a>
+                    <a href="addMaintenance.html">Mantenimiento</a>
+                </div>
+            </div>      
         </nav>
-        
-
     </header>
-    <h1>Detalles de la Órden</h1>
-    <form>
-        <label for="idCamion">Vehículo:</label>
-        <input type="text" id="idCamion" disabled><br>
-
-        <label for="idConductor">Conductor:</label>
-        <input type="text" id="idConductor"><br>
-
-        <label for="fechaInicial">Fecha Inicial:</label>
-        <input type="date" id="fechaInicial"><br>
-
-        <label for="estado">Estado:</label>
-        <select id="estado">
-            <option value="recibido">Recibido</option>
-            <option value="en curso">En Curso</option>
-            <option value="finalizado">Finalizado</option>
-        </select><br>
-
-        <label for="descripcion">Descripción:</label>
-        <textarea id="descripcion"></textarea><br>
-
-        <button type="button" id="save-button">Guardar</button>
-        <button type="button" id="delete-button">Eliminar</button>
-    </form>
+    <div class="container mt-5">
+        <h1>Detalle de la Órden</h1>
+        <div class="form-container">
+            <form>
+                <div class="form-group">
+                    <label for="idCamion">Vehículo:</label>
+                    <input type="text" id="idCamion" class="form-control" disabled>
+                </div>
+                <div class="form-group">
+                    <label for="idConductor">Conductor:</label>
+                    <input type="text" id="idConductor" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="ubicacionInicial">Ubicación Inicial:</label>
+                    <input type="text" id="ubicacionInicial" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="ubicacionFinal">Ubicación Final:</label>
+                    <input type="text" id="ubicacionFinal" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="fechaInicial">Fecha Inicial:</label>
+                    <input type="date" id="fechaInicial" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="fechaFinal">Fecha Final:</label>
+                    <input type="date" id="fechaFinal" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="estado">Estado:</label>
+                    <select id="estado" class="form-control">
+                        <option value="recibido">Recibido</option>
+                        <option value="en curso">En Curso</option>
+                        <option value="finalizado">Finalizado</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="descripcion">Descripción:</label>
+                    <textarea id="descripcion" class="form-control"></textarea>
+                </div>
+                <button type="button" id="save-button" class="btn btn-success">Guardar</button>
+                <button type="button" id="delete-button" class="btn btn-danger">Eliminar</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
