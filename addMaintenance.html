@@ -81,6 +81,15 @@
         });
     </script>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        #content{
+            /* left: 20vw;
+    position: relative; */
+            padding: 5rem 15vw;
+            width: 100%;
+            overflow-y: auto;
+        }
+    </style>
 </head>
 <body>
     <header id="header">
@@ -105,16 +114,18 @@
                 </div>      
         </nav>
     </header>
-    <div class="sidebar">
-        <a href="index.html">Inicio</a>
-        <a href="drivers.html">Conductores</a>
-        <a href="orders.html">Órdenes</a>
-        <a href="vehicles.html">Vehículos</a>
-        <a href="maintenance.html">Mantenimientos</a>
-    </div>
+   
     <div class="main-content"> <!-- Añadido -->
-        <h1>Añadir Mantenimiento</h1>
-        <form id="maintForm">
+        <div class="sidebar">
+            <a href="index.html">Inicio</a>
+            <a href="drivers.html">Conductores</a>
+            <a href="orders.html">Órdenes</a>
+            <a href="vehicles.html">Vehículos</a>
+            <a href="maintenance.html">Mantenimientos</a>
+        </div>
+        <div id="content">
+            <h1>Añadir Mantenimiento</h1>
+            <form id="maintForm">
             <label for="idCamion">Vehículo</label>
             <input type="text" id="idCamion" required><br>
 
@@ -142,6 +153,7 @@
 
             <button type="button" id="crearMant">Añadir Mantenimiento</button>
         </form>
+        </div>
     </div> <!-- Añadido -->
 
 </body>

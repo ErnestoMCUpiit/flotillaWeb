@@ -56,6 +56,16 @@
             });
         });
     </script>
+    
+    <style>
+        #content{
+            /* left: 20vw;
+    position: relative; */
+    padding: 5rem 15vw;
+    width: 100%;
+    overflow-y: auto;
+        }
+    </style>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -83,16 +93,18 @@
         
 
     </header>
-    <div class="sidebar">
-        <a href="index.html">Inicio</a>
-        <a href="drivers.html">Conductores</a>
-        <a href="orders.html">Órdenes</a>
-        <a href="vehicles.html">Vehículos</a>
-        <a href="maintenance.html">Mantenimientos</a>
-    </div>
+    
     <div class="main-content"> <!-- Añadido -->
+        <div class="sidebar">
+            <a href="index.html">Inicio</a>
+            <a href="drivers.html">Conductores</a>
+            <a href="orders.html">Órdenes</a>
+            <a href="vehicles.html">Vehículos</a>
+            <a href="maintenance.html">Mantenimientos</a>
+        </div>
 
-        <h1>Agregar Conductor</h1>
+        <div id="content">
+            <h1>Agregar Conductor</h1>
         <label for="nombre">Nombre:</label>
         <input type="text" id="nombre"><br>
         <label for="apellidos">Apellidos:</label>
@@ -111,9 +123,10 @@
         <input type="text" id="direccion"><br>
         <label for="seguro">Seguro:</label>
         <input type="text" id="seguro"><br>
-
-
         <button id="crear">Agregar Conductor</button>
+        </div>
+
+        
 
     </div> <!-- Añadido -->
 </body>
