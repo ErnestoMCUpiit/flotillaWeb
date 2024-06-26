@@ -98,7 +98,7 @@ section {
 /* Styles for charts */
 .charts-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(2, 1fr); /* Ajusta a dos columnas */
     gap: 20px;
     width: 100%;
 }
@@ -113,7 +113,7 @@ section {
 .chart-container {
     width: 100%;
     height: 0;
-    padding-bottom: 100%; /* This makes the height equal to the width to keep the aspect ratio */
+    padding-bottom: 50%; /* Reduce la altura de las gráficas */
     position: relative;
 }
 
@@ -165,6 +165,11 @@ section {
     justify-content: space-around;
 }
 
+/* Styles for half-width sections */
+.half-width {
+    grid-column: span 1; /* Cada una ocupará una columna en la segunda fila */
+}
+
 /* Media Queries */
 @media (max-width: 768px) {
     .sidebar {
@@ -173,5 +178,9 @@ section {
 
     .main-content {
         margin-left: 200px;
+    }
+
+    .half-width {
+        grid-column: span 2; /* En pantallas pequeñas, cada una ocupará toda la fila */
     }
 }
