@@ -154,6 +154,7 @@
             if (filter === 'finished') document.getElementById('tab-finished').classList.add('active');
         }
     </script>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <header id="header">
@@ -219,5 +220,39 @@
             </tbody>
         </table>
     </div>
+    <div class="sidebar">
+        <a href="index.html">Inicio</a>
+        <a href="drivers.html">Conductores</a>
+        <a href="orders.html">Órdenes</a>
+        <a href="vehicles.html">Vehículos</a>
+        <a href="maintenance.html">Mantenimientos</a>
+    </div>
+    <div class="main-content"> <!-- Añadido -->
+        <h1>Mantenimientos</h1>
+        <input type="text" id="search-bar" placeholder="Buscar por ID de Vehículo...">
+        <button onclick="window.location.href='addMaintenance.html'">Agregar Mantenimiento</button>
+        <div>
+            <span id="tab-all" class="tab active">Todos</span>
+            <span id="tab-scheduled" class="tab">Programados</span>
+            <span id="tab-ongoing" class="tab">En curso</span>
+            <span id="tab-finished" class="tab">Finalizados</span>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Vehículo</th>
+                    <th>Tipo</th>
+                    <th>Estado</th>
+                    <th>Fecha</th>
+                    <th>Detalles</th>
+                    <th>Costo</th>
+                </tr>
+            </thead>
+            <tbody id="mantenimientos-table">
+            </tbody>
+        </table>
+    </div> <!-- Añadido -->
+
 </body>
 </html>

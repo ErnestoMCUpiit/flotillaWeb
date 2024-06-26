@@ -72,7 +72,9 @@
             });
         });
     </script>
+    <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
     <header id="header">
         <div class="icons">
@@ -94,43 +96,53 @@
             </div>      
         </nav>
     </header>
-    <h1>Detalle del Conductor</h1>
-    <form>
+    <div class="sidebar">
+        <a href="index.html">Inicio</a>
+        <a href="drivers.html">Conductores</a>
+        <a href="orders.html">Órdenes</a>
+        <a href="vehicles.html">Vehículos</a>
+        <a href="maintenance.html">Mantenimientos</a>
+    </div>
+    <div class="main-content"> <!-- Añadido -->
+        <h1>Detalle del Conductor</h1>
+            <form>
         <label for="id">ID:</label>
         <input type="text" id="id" disabled><br>
 
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre"><br>
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre"><br>
 
-        <label for="apellidos">Apellidos:</label>
-        <input type="text" id="apellidos"><br>
+            <label for="apellidos">Apellidos:</label>
+            <input type="text" id="apellidos"><br>
 
-        <label for="edad">Edad:</label>
-        <input type="number" id="edad"><br>
+            <label for="edad">Edad:</label>
+            <input type="number" id="edad"><br>
 
-        <label for="licencia">Licencia:</label>
-        <input type="text" id="licencia"><br>
+            <label for="licencia">Licencia:</label>
+            <input type="text" id="licencia"><br>
 
-        <label for="celular">Celular:</label>
-        <input type="tel" id="celular"><br>
+            <label for="celular">Celular:</label>
+            <input type="tel" id="celular"><br>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email"><br>
+            <label for="email">Email:</label>
+            <input type="email" id="email"><br>
 
-        <label for="tipoSangre">Tipo de sangre:</label>
-        <input type="text" id="tipoSangre"><br>
+            <label for="tipoSangre">Tipo de sangre:</label>
+            <input type="text" id="tipoSangre"><br>
 
-        <label for="direccion">Dirección:</label>
-        <input type="text" id="direccion"><br>
+            <label for="direccion">Dirección:</label>
+            <input type="text" id="direccion"><br>
 
-        <label for="seguro">Seguro:</label>
-        <input type="text" id="seguro"><br>
+            <label for="seguro">Seguro:</label>
+            <input type="text" id="seguro"><br>
 
         <label for="ganancias">Ganancias:</label>
         <input type="number" id="ganancias" step="0.01"><br>
 
-        <button type="button" id="save-button">Guardar</button>
-        <button type="button" id="delete-button">Eliminar</button>
-    </form>
+            <button type="button" id="save-button">Guardar</button>
+            <button type="button" id="delete-button">Eliminar</button>
+        </form>
+        </div> <!-- Añadido -->
+
 </body>
 </html>

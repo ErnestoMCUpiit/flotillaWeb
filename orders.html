@@ -218,6 +218,7 @@
             if (filter === 'finalizado') document.querySelector('[data-filter="finalizado"]').classList.add('active');
         }
     </script>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <header id="header">
@@ -240,6 +241,13 @@
             </div>      
         </nav>
     </header>
+    <div class="sidebar">
+        <a href="index.html">Inicio</a>
+        <a href="drivers.html">Conductores</a>
+        <a href="orders.html">Órdenes</a>
+        <a href="vehicles.html">Vehículos</a>
+        <a href="maintenance.html">Mantenimientos</a>
+    </div>
     <div class="container mt-4">
         <div class="page-header">
             <h1>Órdenes</h1>
@@ -286,5 +294,41 @@
             </tbody>
         </table>
     </div>
+    <div class="sidebar">
+        <a href="index.html">Inicio</a>
+        <a href="drivers.html">Conductores</a>
+        <a href="orders.html">Órdenes</a>
+        <a href="vehicles.html">Vehículos</a>
+        <a href="maintenance.html">Mantenimientos</a>
+    </div>
+    <div class="main-content"> <!-- Añadido -->
+        <h1>Órdenes</h1>
+        <input type="text" id="search-bar" placeholder="Buscar por ID Camión...">
+        <button onclick="window.location.href='addOrders.html'">Agregar Entrega</button>
+        <div>
+            <span id="tab-all" class="tab active">Todos</span>
+            <span id="tab-recibido" class="tab active">Recibido</span>
+            <span id="tab-curso" class="tab">En Curso</span>
+            <span id="tab-finalizado" class="tab">Finalizado</span>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID Orden</th>
+                    <th>ID Camión</th>
+                    <th>ID Conductor</th>
+                    <th>Ubicación Inicial</th>
+                    <th>Ubicación Final</th>
+                    <th>Fecha Inicial</th>
+                    <th>Fecha Final</th>
+                    <th>Estado</th>
+                    <th>Descripción</th>
+                </tr>
+            </thead>
+            <tbody id="ordenes-table">
+            </tbody>
+        </table>
+    </div> <!-- Añadido -->
+
 </body>
 </html>

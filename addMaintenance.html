@@ -105,34 +105,44 @@
                 </div>      
         </nav>
     </header>
-    <h1>Añadir Mantenimiento</h1>
-    <form id="maintForm">
-        <label for="idCamion">Vehículo</label>
-        <input type="text" id="idCamion" required><br>
+    <div class="sidebar">
+        <a href="index.html">Inicio</a>
+        <a href="drivers.html">Conductores</a>
+        <a href="orders.html">Órdenes</a>
+        <a href="vehicles.html">Vehículos</a>
+        <a href="maintenance.html">Mantenimientos</a>
+    </div>
+    <div class="main-content"> <!-- Añadido -->
+        <h1>Añadir Mantenimiento</h1>
+        <form id="maintForm">
+            <label for="idCamion">Vehículo</label>
+            <input type="text" id="idCamion" required><br>
 
-        <label for="tipo">Tipo</label>
-        <select id="tipo" required>
-            <option value="check">Check</option>
-            <option value="maintenance">Mantenimiento</option>
-        </select><br>
+            <label for="tipo">Tipo</label>
+            <select id="tipo" required>
+                <option value="check">Check</option>
+                <option value="maintenance">Mantenimiento</option>
+            </select><br>
 
-        <label for="estado">Estado</label>
-        <select id="estado" required>
-            <option value="scheduled">Programado</option>
-            <option value="ongoing">En curso</option>
-            <option value="finished">Finalizado</option>
-        </select><br>
+            <label for="estado">Estado</label>
+            <select id="estado" required>
+                <option value="scheduled">Programado</option>
+                <option value="ongoing">En curso</option>
+                <option value="finished">Finalizado</option>
+            </select><br>
 
-        <label for="fecha">Fecha</label>
-        <input type="date" id="fecha" required><br>
+            <label for="fecha">Fecha</label>
+            <input type="date" id="fecha" required><br>
 
-        <label for="detalles">Detalles</label>
-        <input type="text" id="detalles" required><br>
+            <label for="detalles">Detalles</label>
+            <input type="text" id="detalles" required><br>
 
-        <label for="costo">Costo</label>
-        <input type="number" id="costo" required><br>
+            <label for="costo">Costo</label>
+            <input type="number" id="costo" required><br>
 
-        <button type="button" id="crearMant">Añadir Mantenimiento</button>
-    </form>
+            <button type="button" id="crearMant">Añadir Mantenimiento</button>
+        </form>
+    </div> <!-- Añadido -->
+
 </body>
 </html>
