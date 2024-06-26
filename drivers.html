@@ -4,125 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Conductores</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-        body {
-            background-color: #fff;
-            font-family: Arial, sans-serif;
-        }
-        h1 {
-            color: #000;
-            font-weight: bold;
-        }
-        .search-container {
-            position: relative;
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .input-group {
-            width: 20%;
-        }
-        .table th, .table td {
-            vertical-align: middle;
-        }
-        .table-hover tbody tr:hover {
-            background-color: #f1f1f1;
-        }
-        .table-dark th {
-            background-color: #fff;
-            color: #000;
-            font-weight: bold;
-        }
-        .activo {
-            color: green;
-        }
-        .inactivo {
-            color: red;
-        }
-        .ongoing {
-            color: orange;
-        }
-        .nav-tabs .nav-link {
-            color: #173156;
-        }
-        .nav-tabs .nav-link.active {
-            color: #495057;
-            background-color: #e9ecef;
-            border-color: #dee2e6 #dee2e6 #fff;
-        }
-        .btn-primary {
-            background-color: #173156;
-            border-color: #173156;
-        }
-        .btn-primary:hover {
-            background-color: #0b213a;
-            border-color: #0b213a;
-        }
-        .page-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        /* Estilos adicionales para la barra superior */
-        header {
-            display: flex;
-            align-items: center;
-            padding: 10px 20px;
-            background-color: #f8f9fa;
-            border-bottom: 1px solid #dee2e6;
-            justify-content: space-between; /* Para mover el icono a la derecha */
-        }
-
-        .icons {
-            display: flex;
-            align-items: center;
-        }
-
-        .responsiveIcons {
-            height: 30px; /* Ajustar el tamaño del ícono */
-            margin-right: 10px;
-        }
-
-        .responsivetitle {
-            height: 30px; /* Ajustar el tamaño del título */
-        }
-
-        .dropdown {
-            position: relative;
+        .tab {
             display: inline-block;
-        }
-
-        .dropdown-options {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-            right: 0; /* Para alinear las opciones del dropdown a la derecha */
-        }
-
-        .dropdown:hover .dropdown-options {
-            display: block;
-        }
-
-        .dropdown-options a {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-
-        .dropdown-options a:hover {
+            margin-right: 10px;
+            cursor: pointer;
+            padding: 10px;
             background-color: #f1f1f1;
+            border: 1px solid #ccc;
         }
-
-        nav#principalNav {
-            display: flex;
-            align-items: center;
+        .tab.active {
+            background-color: #ddd;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
         }
     </style>
     <script type="module">
@@ -175,12 +79,9 @@
             }
 
             document.getElementById('search-bar').addEventListener('input', () => renderTable());
-            document.querySelectorAll('.nav-link').forEach(tab => {
-                tab.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    renderTable(e.target.dataset.filter);
-                });
-            });
+            document.getElementById('tab-all').addEventListener('click', () => renderTable('all'));
+            document.getElementById('tab-active').addEventListener('click', () => renderTable('activo'));
+            document.getElementById('tab-inactive').addEventListener('click', () => renderTable('inactivo'));
         });
 
         function renderTable(filter = 'all') {
@@ -188,7 +89,7 @@
             const searchQuery = document.getElementById('search-bar').value.toLowerCase();
 
             conductoresTable.innerHTML = '';
-
+            
             const filteredConductores = conductores.filter(conductor => {
                 const matchesSearch = conductor.nombre.toLowerCase().includes(searchQuery);
                 const matchesFilter = filter === 'all' || conductor.estado.toLowerCase() === filter;
@@ -197,7 +98,6 @@
 
             filteredConductores.forEach(conductor => {
                 const row = document.createElement("tr");
-                row.classList.add('clickable-row');
                 row.innerHTML = `
                     <td>${conductor.id}</td>
                     <td>${conductor.nombre}</td>
@@ -218,16 +118,15 @@
                 conductoresTable.appendChild(row);
             });
 
-            document.querySelectorAll('.nav-link').forEach(tab => tab.classList.remove('active'));
-            if (filter === 'all') document.querySelector('[data-filter="all"]').classList.add('active');
-            if (filter === 'activo') document.querySelector('[data-filter="activo"]').classList.add('active');
-            if (filter === 'inactivo') document.querySelector('[data-filter="inactivo"]').classList.add('active');
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            if (filter === 'all') document.getElementById('tab-all').classList.add('active');
+            if (filter === 'activo') document.getElementById('tab-active').classList.add('active');
+            if (filter === 'inactivo') document.getElementById('tab-inactive').classList.add('active');
         }
     </script>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
     <div class="sidebar">
         <a href="index.html">Inicio</a>
         <a href="drivers.html">Conductores</a>
@@ -255,10 +154,18 @@
             </div>      
         </nav>
     </header>
-    <div class="container mt-4">
+    <div class="main-content"> <!-- Añadido -->
         <div class="page-header">
             <h1>Conductores</h1>
             <button class="btn btn-primary mb-3" onclick="window.location.href='addDriver.html'">+ Agregar Conductor</button>
+        </div>
+        <div class="search-container mb-3">
+            <div class="input-group rounded">
+                <input type="search" id="search-bar" class="form-control rounded" placeholder="Buscar..." aria-label="Search" aria-describedby="search-addon" />
+                <span class="input-group-text border-0" id="search-addon">
+                    <i class="fas fa-search"></i>
+                </span>
+            </div>
         </div>
         <ul class="nav nav-tabs mb-3">
             <li class="nav-item">
@@ -271,48 +178,9 @@
                 <a class="nav-link" data-filter="inactivo" href="#">Inactivos</a>
             </li>
         </ul>
-        <div class="search-container mb-3">
-            <div class="input-group rounded">
-                <input type="search" id="search-bar" class="form-control rounded" placeholder="Buscar..." aria-label="Search" aria-describedby="search-addon" />
-                <span class="input-group-text border-0" id="search-addon">
-                    <i class="fas fa-search"></i>
-                </span>
-            </div>
-        </div>
-
+        
         <table class="table table-hover">
             <thead class="table-dark">
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Apellidos</th>
-                    <th>Edad</th>
-                    <th>Licencia</th>
-                    <th>Celular</th>
-                    <th>Email</th>
-                    <th>Tipo de sangre</th>
-                    <th>Dirección</th>
-                    <th>Seguro</th>
-                    <th>Estado</th>
-                    <th>Unidad</th>
-                </tr>
-            </thead>
-            <tbody id="conductores-table">
-            </tbody>
-        </table>
-    </div>
-    
-    <div class="main-content"> <!-- Añadido -->
-        <h1>Conductores</h1>
-        <input type="text" id="search-bar" placeholder="Buscar por nombre...">
-        <button onclick="window.location.href='addDriver.html'">Agregar Conductor</button>
-        <div>
-            <span id="tab-all" class="tab active">Todos</span>
-            <span id="tab-active" class="tab">Activos</span>
-            <span id="tab-inactive" class="tab">Inactivos</span>
-        </div>
-        <table>
-            <thead>
                 <tr>
                     <th>ID</th>
                     <th>Nombre</th>
