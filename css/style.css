@@ -15,11 +15,11 @@ body {
 /* Sidebar Styles */
 .sidebar {
     height: 100%;
-    width: 250px;
+    width: 230px;
     position: fixed;
     top: 0;
     left: 0;
-    background-color: #04468d;
+    background-color: #173156;
     padding-top: 20px;
     border-radius: 0 10px 10px 0;
     overflow-x: hidden;
@@ -48,7 +48,7 @@ body {
 
 /* Header Styles */
 header {
-    background-color: #04468d;
+    background-color: #173156;
     color: white;
     padding: 10px 20px;
     border-radius: 0 0 10px 10px;
@@ -81,7 +81,7 @@ button {
     padding: 10px 15px;
     border: none;
     border-radius: 5px;
-    background-color: #04468d;
+    background-color: #173156;
     color: white;
     font-size: 1rem;
     cursor: pointer;
@@ -89,7 +89,7 @@ button {
 }
 
 button:hover {
-    background-color: #003366;
+    background-color: #173156;
 }
 
 section {
