@@ -178,13 +178,13 @@
 
         function renderTable(filter = 'all') {
             const camionesTable = document.getElementById("camiones-table");
-            const searchQuery = document.getElementById('search-bar').value.toLowerCase();
+            const searchQuery = document.getElementById('search-bar').value;
 
             camionesTable.innerHTML = '';
 
             const filteredCamiones = camiones.filter(camion => {
                 const matchesSearch = camion.placa.toLowerCase().includes(searchQuery);
-                const matchesFilter = filter === 'all' || camion.estado.toLowerCase() === filter;
+                const matchesFilter = filter === 'all' || camion.estado === filter;
                 return matchesSearch && matchesFilter;
             });
 
@@ -197,7 +197,7 @@
                     <td>${camion.modelo}</td>
                     <td>${camion.maxCarg}</td>
                     <td>${camion.dimension}</td>
-                    <td class="${camion.estado.toLowerCase()}">${camion.estado}</td>
+                    <td class="${camion.estado}">${camion.estado}</td>
                 `;
                 row.addEventListener('click', () => {
                     window.location.href = `detailsVehicle.html?placa=${camion.placa}`;

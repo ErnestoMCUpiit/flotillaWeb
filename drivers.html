@@ -186,13 +186,13 @@
 
         function renderTable(filter = 'all') {
             const conductoresTable = document.getElementById("conductores-table");
-            const searchQuery = document.getElementById('search-bar').value.toLowerCase();
+            const searchQuery = document.getElementById('search-bar').value;
 
             conductoresTable.innerHTML = '';
 
             const filteredConductores = conductores.filter(conductor => {
                 const matchesSearch = conductor.nombre.toLowerCase().includes(searchQuery);
-                const matchesFilter = filter === 'all' || conductor.estado.toLowerCase() === filter;
+                const matchesFilter = filter === 'all' || conductor.estado === filter;
                 return matchesSearch && matchesFilter;
             });
 
@@ -221,7 +221,7 @@
 
             document.querySelectorAll('.nav-link').forEach(tab => tab.classList.remove('active'));
             if (filter === 'all') document.querySelector('[data-filter="all"]').classList.add('active');
-            if (filter === 'activo') document.querySelector('[data-filter="activo"]').classList.add('active');
+            if (filter === 'activo') document.querySelector('[data-filter="disponible"]').classList.add('active');
             if (filter === 'inactivo') document.querySelector('[data-filter="inactivo"]').classList.add('active');
         }
     </script>
@@ -275,7 +275,7 @@
                     <a class="nav-link active" data-filter="all" href="#">Todos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-filter="activo" href="#">Activos</a>
+                    <a class="nav-link" data-filter="disponible" href="#">Activos</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" data-filter="inactivo" href="#">Inactivos</a>

@@ -109,7 +109,7 @@
                 console.log("No data available");
             }
 
-            document.getElementById('search-bar').addEventListener('input', renderTable);
+            document.getElementById('search-bar').addEventListener('input', () => renderTable());
             document.getElementById('tab-all').addEventListener('click', () => renderTable('all'));
             document.getElementById('tab-scheduled').addEventListener('click', () => renderTable('scheduled'));
             document.getElementById('tab-ongoing').addEventListener('click', () => renderTable('ongoing'));
