@@ -7,110 +7,312 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="module">
-        // (Aquí va el script de Firebase y funciones que ya proporcionaste)
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDKYVXlZuKkYFeYKYNAYEz393La5Erl12c",
+            authDomain: "flotilla-d9efb.firebaseapp.com",
+            databaseURL: "https://flotilla-d9efb-default-rtdb.firebaseio.com",
+            projectId: "flotilla-d9efb",
+            storageBucket: "flotilla-d9efb",
+            messagingSenderId: "357309099599",
+            appId: "1:357309099599:web:d449d44db6f602c2d9c43a"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        document.addEventListener("DOMContentLoaded", async () => {
+            try {
+                // Obtener datos de las órdenes
+                const ordersRef = ref(db, 'entregas');
+                const ordersSnapshot = await get(ordersRef);
+
+                const orders = [];
+                if (ordersSnapshot.exists()) {
+                    ordersSnapshot.forEach(childSnapshot => {
+                        const childData = childSnapshot.val();
+                        orders.push(childData);
+                    });
+                    console.log("Órdenes obtenidas:", orders); // Depuración
+                    renderOrdersStatus(orders);
+                } else {
+                    console.log("No data available for orders");
+                }
+
+                // Obtener datos de los vehículos
+                const vehiculosRef = ref(db, 'camiones');
+                const vehiculosSnapshot = await get(vehiculosRef);
+
+                const vehiculos = [];
+                const camiones = [];
+                const gasolina = [];
+                const costos = [];
+
+                if (vehiculosSnapshot.exists()) {
+                    vehiculosSnapshot.forEach(childSnapshot => {
+                        const childData = childSnapshot.val();
+                        vehiculos.push(childData);
+                        camiones.push(childSnapshot.key);
+                        gasolina.push(childData.gasolina);
+                        costos.push(childData.costos);
+                    });
+                    renderVehiculosStatus(vehiculos);
+                    renderGasolinaChart(camiones, gasolina);
+                    renderCostosChart(camiones, costos);
+                } else {
+                    console.log("No data available for vehicles");
+                }
+
+                // Obtener datos de los conductores
+                const conductoresRef = ref(db, 'conductores');
+                const conductoresSnapshot = await get(conductoresRef);
+
+                const conductores = [];
+                if (conductoresSnapshot.exists()) {
+                    conductoresSnapshot.forEach(childSnapshot => {
+                        const childData = childSnapshot.val().datos;  // Acceder a 'datos'
+                        conductores.push({
+                            ...childData,
+                            estado: childData.estado || 'no disponible'
+                        });
+                    });
+                    renderConductoresStatus(conductores);
+                } else {
+                    console.log("No data available for conductores");
+                }
+
+                // Obtener datos de mantenimiento
+                const mantenimientoRef = ref(db, 'mantenimiento');
+                const mantenimientoSnapshot = await get(mantenimientoRef);
+
+                const mantenimientos = [];
+                if (mantenimientoSnapshot.exists()) {
+                    mantenimientoSnapshot.forEach(childSnapshot => {
+                        const childData = childSnapshot.val();
+                        mantenimientos.push(childData);
+                    });
+                    renderMantenimientoStatus(mantenimientos);
+                } else {
+                    console.log("No data available for mantenimiento");
+                }
+
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        });
+
+        function renderOrdersStatus(orders) {
+            const estados = orders.map(order => order.estado);
+            console.log("Estados de órdenes:", estados); // Depuración
+
+            const estadosContados = {
+                programado: estados.filter(estado => estado === 'programado').length,
+                en_curso: estados.filter(estado => estado === 'en curso').length,
+                finalizado: estados.filter(estado => estado === 'finalizado').length,
+                recibido: estados.filter(estado => estado === 'recibido').length
+            };
+
+            console.log("Conteo de estados:", estadosContados); // Depuración
+
+            const ordersContainer = document.getElementById('ordersStatusContainer');
+            ordersContainer.innerHTML = `
+                <div class="status-item">
+                    <div class="status-circle" style="background-color: #63c477;"></div>
+                    Programado
+                    <div class="status-number" style="background-color: rgba(99, 196, 119, 0.3); color: #63c477;">${estadosContados.programado}</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-circle" style="background-color: #e29019;"></div>
+                    En Curso
+                    <div class="status-number" style="background-color: rgba(226, 144, 25, 0.3); color: #e29019;">${estadosContados.en_curso}</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-circle" style="background-color: #f34239;"></div>
+                    Finalizado
+                    <div class="status-number" style="background-color: rgba(243, 66, 57, 0.3); color: #f34239;">${estadosContados.finalizado}</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-circle" style="background-color: #42a5f5;"></div>
+                    Recibido
+                    <div class="status-number" style="background-color: rgba(66, 165, 245, 0.3); color: #42a5f5;">${estadosContados.recibido}</div>
+                </div>
+            `;
+        }
+
+        function renderVehiculosStatus(vehiculos) {
+            const estados = vehiculos.map(vehiculo => vehiculo.state);
+            const estadosContados = {
+                activo: estados.filter(estado => estado === 'activo').length,
+                inactivo: estados.filter(estado => estado === 'inactivo').length,
+                en_mantenimiento: estados.filter(estado => estado === 'en mantenimiento').length
+            };
+
+            const vehiculosContainer = document.getElementById('vehiculosStatusContainer');
+            vehiculosContainer.innerHTML = `
+                <div class="status-item">
+                    <div class="status-circle" style="background-color: #63c477;"></div>
+                    Activo
+                    <div class="status-number" style="background-color: rgba(99, 196, 119, 0.3); color: #63c477;">${estadosContados.activo}</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-circle" style="background-color: #006ab8;"></div>
+                    Inactivo
+                    <div class="status-number" style="background-color: rgba(0, 106, 184, 0.3); color: #006ab8;">${estadosContados.inactivo}</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-circle" style="background-color: #e29019;"></div>
+                    En Mantenimiento
+                    <div class="status-number" style="background-color: rgba(226, 144, 25, 0.3); color: #e29019;">${estadosContados.en_mantenimiento}</div>
+                </div>
+            `;
+        }
+
+        function renderConductoresStatus(conductores) {
+            const estados = conductores.map(conductor => conductor.estado || 'no disponible');
+            console.log("Estados de conductores:", estados); // Depuración
+
+            const estadosContados = {
+                disponible: estados.filter(estado => estado === 'disponible').length,
+                no_disponible: estados.filter(estado => estado === 'no disponible').length
+            };
+
+            console.log("Conteo de estados de conductores:", estadosContados); // Depuración
+
+            const conductoresContainer = document.getElementById('conductoresStatusContainer');
+            conductoresContainer.innerHTML = `
+                <div class="status-item">
+                    <div class="status-circle" style="background-color: #63c477;"></div>
+                    Disponible
+                    <div class="status-number" style="background-color: rgba(99, 196, 119, 0.3); color: #63c477;">${estadosContados.disponible}</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-circle" style="background-color: #f34239;"></div>
+                    No Disponible
+                    <div class="status-number" style="background-color: rgba(243, 66, 57, 0.3); color: #f34239;">${estadosContados.no_disponible}</div>
+                </div>
+            `;
+        }
+
+        function renderMantenimientoStatus(mantenimientos) {
+            const total = mantenimientos.length;
+            const programado = mantenimientos.filter(mantenimiento => mantenimiento.state === 'scheduled').length;
+            const enProgreso = mantenimientos.filter(mantenimiento => mantenimiento.state === 'ongoing').length;
+
+            const mantenimientoContainer = document.getElementById('mantenimientoStatusContainer');
+            mantenimientoContainer.innerHTML = `
+                <div class="status-percentage">
+                    <div class="percentage" style="color: #e29019;">${programado}</div>
+                    <div class="percentage" style="color: #63c477;">${enProgreso}</div>
+                </div>
+                <div class="status-description">
+                    <div>Programado</div>
+                    <div>En Progreso</div>
+                </div>
+            `;
+        }
+
+        function renderGasolinaChart(camiones, gasolina) {
+            const ctx = document.getElementById('gasolinaChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: camiones,
+                    datasets: [{
+                        label: 'Uso de Gasolina',
+                        data: gasolina,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderCostosChart(camiones, costos) {
+            const ctx = document.getElementById('costosChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: camiones,
+                    datasets: [{
+                        label: 'Costos',
+                        data: costos,
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
     </script>
     <style>
-        /* Estilos generales */
-        .main-content {
-            padding: 20px;
+        body{
+            justify-content: space-b;
+            flex-direction: row;
         }
-        
-        .page-header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        
-        .charts-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-        }
-        
-        .chart-section {
-            margin-bottom: 20px;
-        }
-        
-        .half-width {
-            width: 48%;
-        }
-        
-        .full-width {
-            width: 100%;
-        }
-        
-        .status-container {
-            display: flex;
-            justify-content: space-around;
-        }
-        
-        .status-item {
-            text-align: center;
-        }
-        
-        .status-circle {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            display: inline-block;
-        }
-        
-        .status-number {
-            font-size: 1.2em;
-            margin-top: 5px;
+        .main-content{
+            align-items: center; /* Centra verticalmente el contenido del item */
+    justify-content: center;
+            padding: 0 5% 0 5%;
         }
     </style>
 </head>
 <body>
+    <div class="sidebar">
+        <a href="index.html">Inicio</a>
+        <a href="drivers.html">Conductores</a>
+        <a href="orders.html">Órdenes</a>
+        <a href="vehicles.html">Vehículos</a>
+        <a href="maintenance.html">Mantenimientos</a>
+    </div>
     <div class="main-content">
-        <div class="sidebar">
-            <a href="index.html">Inicio</a>
-            <a href="drivers.html">Conductores</a>
-            <a href="orders.html">Órdenes</a>
-            <a href="vehicles.html">Vehículos</a>
-            <a href="maintenance.html">Mantenimientos</a>
-        </div>
-        <div class="page-header">
-            <h1>Dashboard</h1>
-        </div>
         <div class="charts-container">
-            <div class="full-width" style="padding: 10px;">
-                <div class="half-width" style="padding-right: 10px;">
-                    <section class="chart-section">
-                        <h2>Uso de Gasolina por Camión</h2>
-                        <div class="chart-container">
-                            <canvas id="gasolinaChart"></canvas>
-                        </div>
-                    </section>
-                    <section class="chart-section">
-                        <h2>Costos por Camión</h2>
-                        <div class="chart-container">
-                            <canvas id="costosChart"></canvas>
-                        </div>
-                    </section>
+            <!-- Primera fila -->
+            <section class="chart-section" id="vehiculosContainer">
+                <h2>Estado de Vehículos</h2>
+                <div id="vehiculosStatusContainer" class="status-container"></div>
+            </section>
+            <section class="chart-section" id="ordersContainer">
+                <h2>Estado de Órdenes de Trabajo</h2>
+                <div id="ordersStatusContainer" class="status-container"></div>
+            </section>
+            <section class="chart-section" id="conductoresContainer">
+                <h2>Estado de Conductores</h2>
+                <div id="conductoresStatusContainer" class="status-container"></div>
+            </section>
+            <section class="chart-section" id="mantenimientoContainer">
+                <h2>Estado de Mantenimientos</h2>
+                <div id="mantenimientoStatusContainer" class="status-container"></div>
+            </section>
+            <!-- Segunda fila -->
+            <section class="chart-section half-width" id="gasolinaContainer">
+                <h2>Uso de Gasolina por Camión</h2>
+                <div class="chart-container">
+                    <canvas id="gasolinaChart"></canvas>
                 </div>
-                <div class="half-width" style="padding-left: 10px;">
-                    <section class="chart-section">
-                        <h2>Estado de Mantenimiento</h2>
-                        <div id="mantenimientoStatusContainer" class="status-container"></div>
-                    </section>
-                    <section class="chart-section">
-                        <div style="display: flex; justify-content: space-between;">
-                            <div style="width: 48%;">
-                                <h2>Estado de Vehículos</h2>
-                                <div id="vehiculosStatusContainer" class="status-container"></div>
-                            </div>
-                            <div style="width: 48%;">
-                                <h2>Estado de Conductores</h2>
-                                <div id="conductoresStatusContainer" class="status-container"></div>
-                            </div>
-                        </div>
-                    </section>
-                    <section class="chart-section">
-                        <h2>Estado de Órdenes de Trabajo</h2>
-                        <div id="ordersStatusContainer" class="status-container"></div>
-                    </section>
+            </section>
+            <section class="chart-section half-width" id="costosContainer">
+                <h2>Costos por Camión</h2>
+                <div class="chart-container">
+                    <canvas id="costosChart"></canvas>
                 </div>
-            </div>
+            </section>
         </div>
     </div>
 </body>
