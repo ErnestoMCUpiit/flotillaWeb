@@ -6,6 +6,8 @@
 /* style.css */
 /* General Styles */
 body {
+    display: flex;
+    flex-direction: column;
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
@@ -14,13 +16,18 @@ body {
 
 /* Sidebar Styles */
 .sidebar {
+    flex: 1; 
     height: 100%;
-    width: 230px;
-    position: fixed;
+    background-color: #173156;
+    /*  */
+    min-width:  fit-content;
+    max-width: max-content;
+    position:relative;
     top: 0;
     left: 0;
-    background-color: #173156;
+    right: 0;
     padding-top: 20px;
+    /*  */
     border-radius: 0 10px 10px 0;
     overflow-x: hidden;
     transition: 0.5s;
@@ -41,8 +48,11 @@ body {
 }
 
 .main-content {
-    margin-left: 250px;
-    padding: 20px;
+    display: flex;
+    /* margin-left: 250px; */
+    /* padding: 20px; */
+    
+    height: 100vh;
     transition: margin-left 0.5s;
 }
 
@@ -103,9 +113,11 @@ section {
 /* Styles for charts */
 .charts-container {
     display: grid;
+    grid-auto-rows: min-content; 
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
     width: 100%;
+    height: auto;
 }
 
 .chart-section {
@@ -113,6 +125,8 @@ section {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: auto;
+    height: auto;
 }
 
 .chart-container {
@@ -176,9 +190,9 @@ section {
         width: 200px;
     }
 
-    .main-content {
+    /* .main-content {
         margin-left: 200px;
-    }
+    } */
 }
 
 header {
@@ -187,6 +201,11 @@ header {
     align-items: center;
     padding: 0 0.5rem;
     background-color: white;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-height: 10rem;
 }
 
 .icons {
@@ -210,7 +229,6 @@ header {
 
 .responsivePlus {
     padding-top: 10%;
-    width: 37%;
     max-width: 80px;
     height: auto;
 }
@@ -254,8 +272,8 @@ hr{
 .dropdown-options {
     display: none;
     position: absolute;
-    width: 120%;
-    min-width: 2rem;
+    /* width: 120%;
+    min-width: 2rem; */
     top: 100%;
     /* right: 0%; */
     background-color: #e3dede;
@@ -302,4 +320,40 @@ hr{
     display: flex;
     align-items: center;
     
+}
+
+#content{
+    /* display: flex;
+    flex-direction: column; */
+    padding: 5vh;
+    
+    /* margin: 0rem 5rem 0rem 5rem; */
+}
+.table{
+    width: 100%;
+    table-layout: fixed;
+    
+}
+@media (max-width: 1200px) {
+    .table {
+        font-size: 1.5vw;
+    }
+}
+
+@media (max-width: 992px) {
+    .table {
+        font-size: 1.2vw;
+    }
+}
+
+@media (max-width: 768px) {
+    .table {
+        font-size: 0.5vw; /* Ajusta el tamaño de la fuente para pantallas más pequeñas */
+    }
+}
+
+@media (max-width: 576px) {
+    .table {
+        font-size: 0.9em;
+    }
 }

@@ -176,58 +176,63 @@
             </div>      
         </nav>
     </header>
-    <div class="container mt-4">
-        
-    </div>
-    <div class="sidebar">
-        <a href="index.html">Inicio</a>
-        <a href="drivers.html">Conductores</a>
-        <a href="orders.html">Órdenes</a>
-        <a href="vehicles.html">Vehículos</a>
-        <a href="maintenance.html">Mantenimientos</a>
-    </div>
+    
+    
     <div class="main-content"> <!-- Añadido -->
-        <div class="page-header">
-            <h1>Mantenimiento</h1>
-            <button class="btn btn-primary mb-3" onclick="window.location.href='addMaintenance.html'">+ Agregar Mantenimiento</button>
+        
+        
+        <div class="sidebar">
+            <a href="index.html">Inicio</a>
+            <a href="drivers.html">Conductores</a>
+            <a href="orders.html">Órdenes</a>
+            <a href="vehicles.html">Vehículos</a>
+            <a href="maintenance.html">Mantenimientos</a>
         </div>
-        <div class="search-container mb-3">
-            <div class="input-group rounded">
-                <input type="search" id="search-bar" class="form-control rounded" placeholder="Buscar por ID de Vehículo..." aria-label="Search" aria-describedby="search-addon" />
-                <span class="input-group-text border-0" id="search-addon">
-                    <i class="fas fa-search"></i>
-                </span>
+        <div id="content">
+            <div class="page-header">
+                <h1>Mantenimiento</h1>
+                <button class="btn btn-primary mb-3" onclick="window.location.href='addMaintenance.html'">+ Agregar Mantenimiento</button>
             </div>
+            <div class="search-container mb-3">
+                <div class="input-group rounded">
+                    <input type="search" id="search-bar" class="form-control rounded" placeholder="Buscar por ID de Vehículo..." aria-label="Search" aria-describedby="search-addon" />
+                    <span class="input-group-text border-0" id="search-addon">
+                        <i class="fas fa-search"></i>
+                    </span>
+                </div>
+            </div>
+            <ul class="nav nav-tabs mb-3">
+                <li class="nav-item">
+                    <a class="nav-link active tab" id="tab-all" data-filter="all" href="#">Todos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link tab" id="tab-scheduled" data-filter="scheduled" href="#">Programados</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link tab" id="tab-ongoing" data-filter="ongoing" href="#">En curso</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link tab" id="tab-finished" data-filter="finished" href="#">Finalizados</a>
+                </li>
+            </ul>
+            <table class="table table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Vehículo</th>
+                        <th>Tipo</th>
+                        <th>Estado</th>
+                        <th>Fecha</th>
+                        <th>Detalles</th>
+                        <th>Costo</th>
+                    </tr>
+                </thead>
+                <tbody id="mantenimientos-table">
+                </tbody>
+            </table>
+        
         </div>
-        <ul class="nav nav-tabs mb-3">
-            <li class="nav-item">
-                <a class="nav-link active tab" id="tab-all" data-filter="all" href="#">Todos</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link tab" id="tab-scheduled" data-filter="scheduled" href="#">Programados</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link tab" id="tab-ongoing" data-filter="ongoing" href="#">En curso</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link tab" id="tab-finished" data-filter="finished" href="#">Finalizados</a>
-            </li>
-        </ul>
-        <table class="table table-hover">
-            <thead class="table-dark">
-                <tr>
-                    <th>ID</th>
-                    <th>Vehículo</th>
-                    <th>Tipo</th>
-                    <th>Estado</th>
-                    <th>Fecha</th>
-                    <th>Detalles</th>
-                    <th>Costo</th>
-                </tr>
-            </thead>
-            <tbody id="mantenimientos-table">
-            </tbody>
-        </table>
+
     </div> <!-- Añadido -->
 
 </body>
