@@ -67,6 +67,7 @@
         });
     </script>
     <link rel="stylesheet" href="css/detailsOrders.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <header id="header">
@@ -89,57 +90,67 @@
             </div>      
         </nav>
     </header>
-    <div class="container mt-5">
+    <!-- <div class="container mt-5">
         <div class="sidebar">
         <a href="index.html">Inicio</a>
         <a href="drivers.html">Conductores</a>
         <a href="orders.html">Órdenes</a>
         <a href="vehicles.html">Vehículos</a>
         <a href="maintenance.html">Mantenimientos</a>
-    </div>
+    </div> -->
     <div class="main-content"> <!-- Añadido -->
-        <h1>Detalle de la Órden</h1>
-        <div class="form-container">
-                <form>
-                <div class="form-group">
-                        <label for="idCamion">Vehículo:</label>
-                        <input type="text" id="idCamion" class="form-control" disabled>
-                </div>
-                <div class="form-group">
-                        <label for="idConductor">Conductor:</label>
-                        <input type="text" id="idConductor" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="ubicacionInicial">Ubicación Inicial:</label>
-                    <input type="text" id="ubicacionInicial" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="ubicacionFinal">Ubicación Final:</label>
-                    <input type="text" id="ubicacionFinal" class="form-control">
-                </div>
-                <div class="form-group">
-                        <label for="fechaInicial">Fecha Inicial:</label>
-                        <input type="date" id="fechaInicial" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label for="fechaFinal">Fecha Final:</label>
-                    <input type="date" id="fechaFinal" class="form-control">
-                </div>
-                <div class="form-group">
-                        <label for="estado">Estado:</label>
-                        <select id="estado" class="form-control">
-                            <option value="recibido">Recibido</option>
-                            <option value="en curso">En Curso</option>
-                            <option value="finalizado">Finalizado</option>
-                        </select>
-                </div>
-                <div class="form-group">
-                        <label for="descripcion">Descripción:</label>
-                        <textarea id="descripcion" class="form-control"></textarea>
-                </div>
-                    <button type="button" id="save-button" class="btn btn-success">Guardar</button>
-                    <button type="button" id="delete-button" class="btn btn-danger">Eliminar</button>
-                </form>
+        <div class="sidebar">
+            <a href="index.html">Inicio</a>
+            <a href="drivers.html">Conductores</a>
+            <a href="orders.html">Órdenes</a>
+            <a href="vehicles.html">Vehículos</a>
+            <a href="maintenance.html">Mantenimientos</a>
+        </div>
+        
+        <div id="content">
+            <div class="form-container">
+                <h1>Detalle de la Órden</h1>
+                    <form>
+                    <div class="form-group">
+                            <label for="idCamion">Vehículo:</label>
+                            <input type="text" id="idCamion" class="form-control" disabled>
+                    </div>
+                    <div class="form-group">
+                            <label for="idConductor">Conductor:</label>
+                            <input type="text" id="idConductor" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="ubicacionInicial">Ubicación Inicial:</label>
+                        <input type="text" id="ubicacionInicial" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="ubicacionFinal">Ubicación Final:</label>
+                        <input type="text" id="ubicacionFinal" class="form-control">
+                    </div>
+                    <div class="form-group">
+                            <label for="fechaInicial">Fecha Inicial:</label>
+                            <input type="date" id="fechaInicial" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="fechaFinal">Fecha Final:</label>
+                        <input type="date" id="fechaFinal" class="form-control">
+                    </div>
+                    <div class="form-group">
+                            <label for="estado">Estado:</label>
+                            <select id="estado" class="form-control">
+                                <option value="recibido">Recibido</option>
+                                <option value="en curso">En Curso</option>
+                                <option value="finalizado">Finalizado</option>
+                            </select>
+                    </div>
+                    <div class="form-group">
+                            <label for="descripcion">Descripción:</label>
+                            <textarea id="descripcion" class="form-control"></textarea>
+                    </div>
+                        <button type="button" id="save-button" class="btn btn-success">Guardar</button>
+                        <button type="button" id="delete-button" class="btn btn-danger">Eliminar</button>
+                    </form>
+            </div>
         </div>
     </div>
     </div> <!-- Añadido -->

@@ -2,7 +2,6 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f4f7f9;
     margin: 0;
-    padding: 20px;
 }
 
 h1 {
@@ -114,4 +113,11 @@ header {
 nav#principalNav {
     display: flex;
     align-items: center;
+}
+#content{
+    /* left: 20vw;
+position: relative; */
+    padding: 5rem 15vw;
+    width: 100%;
+    overflow-y: auto;
 }

@@ -103,6 +103,7 @@ section {
 /* Styles for charts */
 .charts-container {
     display: grid;
+    grid-auto-rows: min-content; 
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
     width: 100%;

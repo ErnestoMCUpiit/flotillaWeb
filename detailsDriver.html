@@ -73,6 +73,15 @@
         });
     </script>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        #content{
+        /* left: 20vw;
+    position: relative; */
+        padding: 5rem 15vw;
+        width: 100%;
+        overflow-y: auto;
+    }
+    </style>
 </head>
 
 <body>
@@ -96,15 +105,17 @@
             </div>      
         </nav>
     </header>
-    <div class="sidebar">
-        <a href="index.html">Inicio</a>
-        <a href="drivers.html">Conductores</a>
-        <a href="orders.html">Órdenes</a>
-        <a href="vehicles.html">Vehículos</a>
-        <a href="maintenance.html">Mantenimientos</a>
-    </div>
+    
     <div class="main-content"> <!-- Añadido -->
-        <h1>Detalle del Conductor</h1>
+        <div class="sidebar">
+            <a href="index.html">Inicio</a>
+            <a href="drivers.html">Conductores</a>
+            <a href="orders.html">Órdenes</a>
+            <a href="vehicles.html">Vehículos</a>
+            <a href="maintenance.html">Mantenimientos</a>
+        </div>
+        <div id="content">
+            <h1>Detalle del Conductor</h1>
             <form>
         <label for="id">ID:</label>
         <input type="text" id="id" disabled><br>
@@ -142,7 +153,8 @@
             <button type="button" id="save-button">Guardar</button>
             <button type="button" id="delete-button">Eliminar</button>
         </form>
-        </div> <!-- Añadido -->
+        </div>
+    </div> <!-- Añadido -->
 
 </body>
 </html>
